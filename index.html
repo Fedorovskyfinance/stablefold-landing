@@ -1,0 +1,2523 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Stablefold — Наставничество в стейблкоин-арбитраже</title>
+<meta name="description" content="Платите только из своей чистой прибыли. Деньги остаются на вашем кошельке. Доход не зависит от того, растёт рынок или падает." />
+<meta name="theme-color" content="#0B0D10" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0D10'/%3E%3Crect x='6' y='6' width='20' height='20' fill='none' stroke='%23B89968' stroke-width='1.5'/%3E%3Crect x='10.5' y='10.5' width='11' height='11' fill='none' stroke='%23EDE5D3' stroke-width='1.2' transform='rotate(45 16 16)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,72..144,300..500,50..100,0..1;1,72..144,300..500,50..100,0..1&family=Geist:wght@380..500&family=Geist+Mono:wght@400..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,72..144,300..500,50..100,0..1;1,72..144,300..500,50..100,0..1&family=Geist:wght@380..500&family=Geist+Mono:wght@400..500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,72..144,300..500,50..100,0..1;1,72..144,300..500,50..100,0..1&family=Geist:wght@380..500&family=Geist+Mono:wght@400..500&display=swap"></noscript>
+
+<style>
+:root{
+  --ink:#0B0D10;
+  --slate:#13161B;
+  --char:#1E2229;
+  --hairline:#262A31;
+  --bone:#EDE5D3;
+  --bone-soft:#D8D1BF;
+  --mute:#9A9286;
+  --mute-soft:#8A8579;
+  --brass:#B89968;
+  --brass-deep:#8E7548;
+  --sage:#7A8C5F;
+  --burgundy:#3A2A24;
+
+  --serif: "Fraunces", "Times New Roman", serif;
+  --sans:  "Geist", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono:  "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --maxw: 1240px;
+  --gutter: clamp(20px, 4vw, 56px);
+  --radius: 2px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; background:var(--ink)}
+body{
+  background:var(--ink);
+  color:var(--bone);
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:17px;
+  line-height:1.55;
+  font-feature-settings:"ss01","ss02","cv11";
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+
+/* ---------- background atmosphere ---------- */
+.atmos{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(1200px 800px at 78% -10%, rgba(184,153,104,0.10), transparent 60%),
+    radial-gradient(900px 700px at 8% 110%, rgba(122,140,95,0.06), transparent 60%),
+    var(--ink);
+}
+.grain{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;mix-blend-mode:overlay;opacity:.5;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.92  0 0 0 0 0.89  0 0 0 0 0.83  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- layout primitives ---------- */
+.container{max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter)}
+.row{display:grid; grid-template-columns:repeat(12,1fr); gap:24px}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brass);font-weight:500;
+}
+.eyebrow::before{content:"§ "; color:var(--mute-soft); font-weight:400}
+.hairline{height:1px;background:var(--hairline);width:100%}
+.dot-sep{display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--mute-soft);vertical-align:middle;margin:0 .6em}
+
+/* ---------- typography ---------- */
+.h-display{
+  font-family:var(--serif);
+  font-weight:340;
+  font-style:normal;
+  font-variation-settings:"opsz" 144, "SOFT" 50, "WONK" 0;
+  letter-spacing:-0.025em;
+  line-height:0.96;
+  color:var(--bone);
+}
+.h-display em{
+  font-style:italic;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  color:var(--brass);
+  font-weight:380;
+}
+.h-2{
+  font-family:var(--serif);
+  font-weight:360;
+  font-variation-settings:"opsz" 96, "SOFT" 50;
+  letter-spacing:-0.022em;
+  line-height:1.02;
+  color:var(--bone);
+}
+.h-3{
+  font-family:var(--serif);
+  font-weight:380;
+  font-variation-settings:"opsz" 72, "SOFT" 50;
+  letter-spacing:-0.018em;
+  line-height:1.1;
+}
+.lead{
+  font-family:var(--sans);
+  font-size:clamp(17px, 1.4vw, 21px);
+  line-height:1.5;
+  color:var(--bone-soft);
+  font-weight:380;
+  max-width:62ch;
+  letter-spacing:-0.005em;
+}
+.mono-tag{
+  font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--mute);
+  font-weight:400;
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:16px 22px 15px;
+  font-family:var(--sans);font-size:14.5px;font-weight:500;letter-spacing:-0.005em;
+  border-radius:1px;
+  transition:transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+  position:relative;
+}
+.btn-primary{
+  background:var(--brass); color:var(--ink);
+  border:1px solid var(--brass);
+}
+.btn-primary:hover{background:var(--bone); border-color:var(--bone); transform:translateY(-1px)}
+.btn-ghost{
+  background:transparent;color:var(--bone);
+  border:1px solid var(--char);
+}
+.btn-ghost:hover{border-color:var(--brass); color:var(--brass)}
+.btn .arrow{
+  width:14px;height:14px;
+  transition:transform .25s ease;
+}
+.btn:hover .arrow{transform:translateX(4px)}
+
+.text-link{
+  color:var(--brass); position:relative; padding-bottom:2px;
+  border-bottom:1px solid color-mix(in srgb, var(--brass) 35%, transparent);
+}
+.text-link:hover{border-bottom-color:var(--brass)}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  backdrop-filter:blur(14px) saturate(140%);
+  background:color-mix(in srgb, var(--ink) 70%, transparent);
+  border-bottom:1px solid color-mix(in srgb, var(--hairline) 60%, transparent);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--serif);font-weight:420;font-size:20px;letter-spacing:-0.02em;
+  font-variation-settings:"opsz" 96, "SOFT" 50;
+}
+.brand-mark{
+  width:22px;height:22px;display:inline-block;position:relative;
+}
+.brand-mark::before, .brand-mark::after{
+  content:"";position:absolute;inset:0;border:1px solid var(--brass);
+}
+.brand-mark::after{transform:rotate(45deg) scale(.62); border-color:var(--bone)}
+.nav-links{display:flex;gap:30px;align-items:center}
+.nav-links a{
+  font-size:13.5px;color:var(--bone-soft);font-weight:400;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--brass)}
+.nav-cta{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--bone)}
+.nav-cta::after{content:" →"; color:var(--brass)}
+@media (max-width:760px){
+  .nav-links{display:none}
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  padding-top:140px;
+  padding-bottom:120px;
+  overflow:hidden;
+}
+.hero-grid{
+  display:grid; grid-template-columns: 1.4fr 1fr; gap:60px; align-items:end;
+}
+@media (max-width:980px){ .hero-grid{grid-template-columns:1fr; gap:50px} }
+
+.hero-meta{
+  display:flex;align-items:center;gap:14px;margin-bottom:36px;
+}
+.hero-meta .pill{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mute);
+  border:1px solid var(--char); padding:6px 10px; border-radius:1px;
+}
+.hero-meta .pill .live-dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--sage);
+  margin-right:8px;vertical-align:middle;
+  box-shadow:0 0 0 0 color-mix(in srgb, var(--sage) 60%, transparent);
+  animation:pulse 2.4s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--sage) 70%, transparent)}
+  70%{box-shadow:0 0 0 8px transparent}
+  100%{box-shadow:0 0 0 0 transparent}
+}
+
+.hero h1{
+  margin:0 0 32px;
+  font-size:clamp(40px, 5.6vw, 84px);
+  max-width:18ch;
+}
+.hero .lead{margin:0 0 44px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero-tertiary{
+  margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--mute);
+  letter-spacing:.04em;
+}
+
+/* hero side panel — Cartoglyph (механика на одном языке) */
+.hero-side{
+  border:1px solid var(--char);
+  background:color-mix(in srgb, var(--slate) 80%, transparent);
+  padding:28px 28px 24px;
+  border-radius:1px;
+  position:relative;
+}
+.hero-side::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--brass) 6%, transparent) 100%);
+  pointer-events:none;
+}
+.hero-side h2.panel-h,
+.mech-visual h3.panel-h,
+.proof-chart h3.panel-h{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brass);margin:0 0 18px;font-weight:500;
+}
+.glyph-row{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding:14px 0;
+  border-bottom:1px dashed var(--hairline);
+  font-family:var(--mono);font-size:13px;
+}
+.glyph-row:last-child{border-bottom:none}
+.glyph-row .label{color:var(--mute)}
+.glyph-row .val{color:var(--bone)}
+.glyph-row .val.brass{color:var(--brass)}
+.glyph-row .val.sage{color:var(--sage)}
+.glyph-row .val .delta{color:var(--mute);margin-left:6px;font-size:11px}
+
+.three-pillars{
+  display:grid;grid-template-columns:repeat(3,1fr); gap:0;
+  margin-top:80px;
+  border-top:1px solid var(--hairline);
+  border-bottom:1px solid var(--hairline);
+}
+.pillar{
+  padding:28px 28px 28px 0;
+  border-right:1px solid var(--hairline);
+}
+.pillar:last-child{border-right:none; padding-right:0}
+.pillar:nth-child(n+2){padding-left:28px}
+.pillar .num{
+  font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.18em;
+  margin-bottom:14px;
+}
+.pillar .ttl{
+  font-family:var(--serif);font-size:22px;line-height:1.15;
+  font-variation-settings:"opsz" 72,"SOFT" 50;font-weight:380;
+  margin-bottom:8px;letter-spacing:-0.018em;
+}
+.pillar .desc{font-size:14px;color:var(--mute);line-height:1.5;max-width:34ch}
+@media (max-width:760px){
+  .three-pillars{grid-template-columns:1fr}
+  .pillar{border-right:none;border-bottom:1px solid var(--hairline);padding:22px 0}
+  .pillar:nth-child(n+2){padding-left:0}
+  .pillar:last-child{border-bottom:none}
+}
+
+/* ---------- generic section ---------- */
+section.s{padding:140px 0; position:relative}
+.s-head{
+  display:grid; grid-template-columns: 1fr 2fr; gap:60px; align-items:start;
+  margin-bottom:72px;
+}
+@media (max-width:860px){
+  .s-head{grid-template-columns:1fr; gap:24px; margin-bottom:48px}
+  section.s{padding:96px 0}
+}
+.s-head .left .eyebrow{display:block; margin-bottom:18px}
+.s-head .left .num{
+  font-family:var(--mono);font-size:13px;color:var(--mute-soft);letter-spacing:.04em;
+  display:block;
+}
+.s-head .right h2{margin:0 0 18px; font-size:clamp(36px,4.8vw,64px)}
+
+/* ---------- problem (agitation) ---------- */
+.problem-list{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:0;
+  border-top:1px solid var(--hairline);
+}
+.problem-item{
+  padding:32px 32px 32px 0;
+  border-bottom:1px solid var(--hairline);
+  border-right:1px solid var(--hairline);
+  display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start;
+}
+.problem-item:nth-child(2n){border-right:none; padding-left:32px; padding-right:0}
+.problem-item:nth-last-child(-n+2){border-bottom:none}
+.problem-item .idx{
+  font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.18em;padding-top:4px;
+}
+.problem-item .ttl{
+  font-family:var(--serif);font-size:22px;line-height:1.2;
+  font-variation-settings:"opsz" 72,"SOFT" 50;
+  letter-spacing:-0.018em;font-weight:380;color:var(--bone);margin:0 0 8px;
+}
+.problem-item .desc{font-size:14.5px;color:var(--mute);line-height:1.55}
+@media (max-width:760px){
+  .problem-list{grid-template-columns:1fr}
+  .problem-item, .problem-item:nth-child(2n){padding:24px 0; border-right:none}
+  .problem-item:nth-last-child(-n+2){border-bottom:1px solid var(--hairline)}
+  .problem-item:last-child{border-bottom:none}
+}
+
+/* ---------- crypto map (instruments) ---------- */
+.map-grid{
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:1px;
+  background:var(--hairline);
+  border:1px solid var(--hairline);
+}
+.map-cell{
+  background:var(--ink);
+  padding:28px 24px 26px;
+  display:flex;flex-direction:column;gap:10px;
+  min-height:170px;
+  transition:background .25s ease;
+  position:relative;
+}
+.map-cell:hover{background:var(--slate)}
+.map-cell .glyph{
+  width:30px;height:30px;border:1px solid var(--brass);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:6px;
+}
+.map-cell .glyph svg{width:14px;height:14px;color:var(--brass)}
+.map-cell .name{
+  font-family:var(--serif);font-size:18px;
+  font-variation-settings:"opsz" 72,"SOFT" 50;font-weight:400;
+  letter-spacing:-0.012em;
+}
+.map-cell .desc{font-size:13px;color:var(--mute);line-height:1.45}
+.map-cell.flagship::after{
+  content:"наш фокус"; position:absolute; top:14px; right:14px;
+  font-family:var(--mono);font-size:9.5px;color:var(--brass);
+  letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid color-mix(in srgb, var(--brass) 50%, transparent); padding:3px 7px;
+}
+.map-cell.flagship{background:color-mix(in srgb, var(--slate) 60%, var(--ink))}
+@media (max-width:860px){.map-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.map-grid{grid-template-columns:1fr}}
+
+/* ---------- mechanism ---------- */
+.mech{
+  display:grid; grid-template-columns: 1.05fr 1fr; gap:60px; align-items:start;
+}
+@media (max-width:980px){.mech{grid-template-columns:1fr}}
+.mech-text p{margin:0 0 18px; color:var(--bone-soft); font-size:16.5px; line-height:1.6}
+.mech-text .quote{
+  font-family:var(--serif);font-size:24px;line-height:1.3;color:var(--bone);
+  font-variation-settings:"opsz" 96,"SOFT" 50;
+  border-left:1px solid var(--brass);padding-left:22px;margin:34px 0;
+  font-weight:360;letter-spacing:-0.012em;
+}
+
+.mech-visual{
+  border:1px solid var(--char); background:var(--slate); padding:32px;
+  position:relative;
+}
+.mech-visual h4{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brass);margin:0 0 22px;font-weight:500;
+}
+
+.market-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:16px 0;border-bottom:1px dashed var(--hairline);
+  font-family:var(--mono);font-size:13px;color:var(--bone);
+}
+.market-row .label{color:var(--mute);font-size:12px}
+.market-row.anomaly{padding:24px 0; border-bottom:1px solid var(--brass)}
+.market-row.anomaly .label{color:var(--brass);font-weight:500}
+.market-row.anomaly .val{color:var(--bone); font-size:18px}
+
+.regimes{
+  margin-top:30px;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--hairline);
+  border:1px solid var(--hairline);
+}
+.regime{background:var(--slate); padding:18px 16px}
+.regime .nm{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:10px}
+.regime .val{font-family:var(--serif);font-size:20px;font-variation-settings:"opsz" 72,"SOFT" 50;font-weight:380;letter-spacing:-0.018em}
+.regime .ds{font-size:11px;color:var(--mute);margin-top:6px;font-family:var(--mono);letter-spacing:.04em}
+
+/* ---------- offer stack ---------- */
+.stack{
+  border-top:1px solid var(--hairline);
+}
+.stack-row{
+  display:grid; grid-template-columns: 60px 2fr 1fr; gap:24px;
+  padding:28px 0;
+  border-bottom:1px solid var(--hairline);
+  align-items:baseline;
+}
+.stack-row .num{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.14em}
+.stack-row .name{
+  font-family:var(--serif);font-size:24px;font-variation-settings:"opsz" 72,"SOFT" 50;
+  font-weight:380;letter-spacing:-0.018em;line-height:1.2;
+}
+.stack-row .name .desc{
+  display:block;font-family:var(--sans);font-size:14.5px;color:var(--mute);
+  margin-top:6px;font-weight:400;letter-spacing:0;line-height:1.5;
+}
+.stack-row .price{
+  font-family:var(--mono);font-size:14px;color:var(--bone);text-align:right;letter-spacing:.02em;
+}
+.stack-row .price .strike{color:var(--mute-soft);text-decoration:line-through;font-size:11px;display:block;margin-bottom:4px}
+.stack-total{
+  display:grid;grid-template-columns: 60px 2fr 1fr; gap:24px;
+  padding:36px 0 0; align-items:baseline;
+}
+.stack-total .label{
+  grid-column:2; font-family:var(--serif);font-size:28px;
+  font-variation-settings:"opsz" 96,"SOFT" 50;font-weight:360;letter-spacing:-0.022em;
+}
+.stack-total .label em{color:var(--brass);font-style:italic}
+.stack-total .price{font-family:var(--mono);font-size:18px;color:var(--brass);text-align:right;font-weight:500}
+.stack-payline{
+  margin-top:18px; padding:22px 0; border-top:1px solid var(--brass);
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.04em;
+}
+.stack-payline .you-pay{font-family:var(--serif);font-size:34px;color:var(--bone);font-variation-settings:"opsz" 96,"SOFT" 50;font-weight:380;letter-spacing:-0.022em}
+.stack-payline .you-pay em{color:var(--brass);font-style:italic}
+
+.bonus-strip{
+  margin-top:28px; padding:28px; border:1px dashed var(--brass);
+  background:color-mix(in srgb, var(--brass) 4%, transparent);
+  display:grid; grid-template-columns:1fr auto; gap:32px; align-items:end;
+}
+.bonus-head .h-3{color:var(--bone)}
+.bonus-meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;text-align:right}
+.bonus-tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
+.bonus-value{font-family:var(--mono);font-size:13px;color:var(--mute)}
+.bonus-value b{color:var(--brass);font-weight:500}
+@media (max-width:760px){
+  .bonus-strip{grid-template-columns:1fr;gap:14px;padding:22px;align-items:start}
+  .bonus-meta{align-items:flex-start;text-align:left}
+}
+@media (max-width:760px){
+  .stack-row{grid-template-columns: 36px 1fr; gap:14px}
+  .stack-row .price{grid-column:1 / -1; text-align:left; padding-left:50px}
+  .stack-total{grid-template-columns: 36px 1fr; gap:14px}
+  .stack-total .label{grid-column:1 / -1; padding-left:50px; font-size:22px}
+  .stack-total .price{grid-column:1 / -1; text-align:left; padding-left:50px}
+  .stack-payline{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
+/* ---------- pricing scale (риск-реверс) ---------- */
+.scale-wrap{
+  border:1px solid var(--char);
+  padding:48px 48px 40px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--slate) 70%, transparent) 0%, transparent 100%);
+  position:relative;
+}
+.scale-wrap::before{
+  content:"";position:absolute;top:0;left:0;width:120px;height:1px;background:var(--brass);
+}
+.scale-headline{
+  font-family:var(--serif);font-size:clamp(28px, 3.6vw, 44px);
+  font-variation-settings:"opsz" 96,"SOFT" 50;font-weight:360;
+  letter-spacing:-0.022em;line-height:1.1;margin:0 0 36px;max-width:24ch;
+}
+.scale-headline em{color:var(--brass);font-style:italic;
+  font-variation-settings:"opsz" 96,"SOFT" 100,"WONK" 1}
+
+.scale-track{
+  position:relative; height:200px;
+  display:grid; grid-template-columns:repeat(4, 1fr);
+  margin:64px 0 32px;
+}
+.scale-step{
+  position:relative; border-right:1px dashed var(--hairline);
+  padding:0 18px; display:flex; flex-direction:column; justify-content:flex-end;
+}
+.scale-step:last-child{border-right:none}
+.scale-step .month{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mute);
+  margin-bottom:10px;
+}
+.scale-step .pct{
+  font-family:var(--serif);font-size:clamp(48px, 6vw, 88px);
+  font-variation-settings:"opsz" 144,"SOFT" 50;font-weight:340;
+  letter-spacing:-0.04em;line-height:1;color:var(--bone);
+}
+.scale-step .pct sup{
+  font-size:.4em; font-family:var(--sans); color:var(--mute);
+  font-weight:400;letter-spacing:0;vertical-align:super;margin-left:2px;
+}
+.scale-step .you{
+  font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:14px;letter-spacing:.04em;
+}
+.scale-step .you b{color:var(--sage);font-weight:500}
+
+/* визуальный bar — убывающая полоса */
+.scale-bar{
+  position:absolute;left:0;right:0;top:30px;height:6px;
+  background:linear-gradient(90deg, var(--brass) 0%, color-mix(in srgb, var(--brass) 30%, var(--char)) 100%);
+}
+.scale-bar::after{
+  content:""; position:absolute; right:-1px; top:-3px; width:1px; height:12px; background:var(--char);
+}
+
+.scale-foot{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:20px;
+  padding-top:24px; border-top:1px solid var(--hairline);
+}
+.scale-foot .pledge{
+  font-family:var(--serif);font-size:20px;color:var(--bone);
+  font-variation-settings:"opsz" 72,"SOFT" 50;font-weight:380;letter-spacing:-0.012em;
+}
+.scale-foot .pledge em{color:var(--brass);font-style:italic}
+
+.pledge-60{
+  margin-top:32px; padding:32px;
+  border:1px solid var(--brass);
+  background:color-mix(in srgb, var(--brass) 5%, var(--ink));
+  display:grid; grid-template-columns:1.4fr 1fr; gap:36px; align-items:center;
+  position:relative;
+}
+.pledge-60::before{
+  content:""; position:absolute; left:-1px; top:0; width:3px; height:100%; background:var(--brass);
+}
+.pledge-60-head .h-3{color:var(--bone);max-width:30ch}
+.pledge-60-head .lead{font-size:15.5px;color:var(--bone-soft)}
+.pledge-60-side{
+  border-left:1px solid color-mix(in srgb, var(--brass) 30%, transparent);
+  padding-left:32px;
+}
+.pledge-60-stat{display:flex;flex-direction:column;gap:8px}
+.pledge-60-label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--brass);text-transform:uppercase}
+.pledge-60-val{
+  font-family:var(--serif);font-size:clamp(64px, 9vw, 120px);
+  font-variation-settings:"opsz" 144,"SOFT" 50;font-weight:340;
+  letter-spacing:-0.04em;line-height:1;color:var(--bone);
+}
+.pledge-60-unit{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.04em}
+@media (max-width:760px){
+  .pledge-60{grid-template-columns:1fr;gap:18px;padding:22px}
+  .pledge-60-side{border-left:none;border-top:1px solid color-mix(in srgb, var(--brass) 30%, transparent);padding-left:0;padding-top:18px}
+  .pledge-60-val{font-size:64px}
+}
+
+@media (max-width:760px){
+  .scale-wrap{padding:28px 22px}
+  .scale-track{grid-template-columns:1fr; height:auto; margin:32px 0 0}
+  .scale-step{padding:18px 0; border-right:none; border-bottom:1px dashed var(--hairline);
+    flex-direction:row; align-items:baseline; justify-content:space-between; gap:14px}
+  .scale-step:last-child{border-bottom:none}
+  .scale-bar{display:none}
+  .scale-step .pct{font-size:46px}
+  .scale-step .you{margin:0}
+}
+
+/* ---------- comparison table ---------- */
+.cmp{
+  border:1px solid var(--char);
+  width:100%;border-collapse:collapse;
+  font-size:14.5px;
+}
+.cmp th, .cmp td{
+  padding:18px 20px; text-align:left; vertical-align:middle;
+  border-bottom:1px solid var(--hairline);
+  border-right:1px solid var(--hairline);
+}
+.cmp th:last-child, .cmp td:last-child{border-right:none}
+.cmp tr:last-child td{border-bottom:none}
+.cmp thead th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mute);font-weight:500;background:var(--slate);
+}
+.cmp thead th.us{
+  color:var(--brass); background:color-mix(in srgb, var(--brass) 8%, var(--slate));
+  border-left:1px solid var(--brass); border-right:1px solid var(--brass);
+}
+.cmp tbody td.us{
+  background:color-mix(in srgb, var(--brass) 5%, var(--ink));
+  border-left:1px solid var(--brass); border-right:1px solid var(--brass);
+  color:var(--bone);
+}
+.cmp tbody tr:last-child td.us{border-bottom:1px solid var(--brass)}
+.cmp tbody th[scope="row"]{
+  color:var(--bone);font-weight:400; text-align:left;
+  background:transparent;
+  font-family:var(--sans);font-size:14.5px;
+  border-bottom:1px solid var(--hairline); border-right:1px solid var(--hairline);
+  padding:18px 20px;
+}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.cmp tbody td{color:var(--mute)}
+.cmp .y{color:var(--sage); font-family:var(--mono);font-size:13px}
+.cmp .n{color:var(--mute-soft);font-family:var(--mono);font-size:13px}
+.cmp .y.us{color:var(--brass)}
+@media (max-width:760px){
+  .cmp{font-size:12.5px}
+  .cmp th, .cmp td{padding:12px 10px}
+}
+
+/* ---------- proof ---------- */
+.proof-grid{
+  display:grid; grid-template-columns: 2fr 1fr; gap:24px;
+}
+@media (max-width:860px){.proof-grid{grid-template-columns:1fr}}
+.proof-chart{
+  border:1px solid var(--char); background:var(--slate); padding:32px; min-height:340px;
+  position:relative;
+}
+.proof-chart h3.panel-h{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin:0 0 24px;font-weight:500}
+.chart-meta{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px}
+.chart-meta .big{
+  font-family:var(--serif);font-size:48px;font-variation-settings:"opsz" 144,"SOFT" 50;
+  font-weight:360;letter-spacing:-0.03em;line-height:1; color:var(--bone);
+}
+.chart-meta .big sup{color:var(--sage);font-size:.4em;font-family:var(--mono);font-weight:500;letter-spacing:.04em;margin-left:6px;vertical-align:super}
+.chart-meta .small{font-family:var(--mono);font-size:11px;color:var(--mute);text-align:right;letter-spacing:.04em}
+
+.onchain-verify{
+  margin-top:22px; padding-top:18px; border-top:1px solid var(--hairline);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+}
+.onchain-label{color:var(--mute);text-transform:uppercase;letter-spacing:.16em;font-size:10.5px}
+.onchain-addr{color:var(--bone);background:var(--ink);padding:5px 9px;border:1px solid var(--char);font-size:11.5px}
+.onchain-link{color:var(--brass);border-bottom:1px solid color-mix(in srgb, var(--brass) 35%, transparent)}
+.onchain-link:hover{border-bottom-color:var(--brass)}
+
+.proof-side{display:flex;flex-direction:column;gap:24px}
+.proof-card{
+  border:1px solid var(--char); background:var(--slate);
+  padding:24px 22px; flex:1; display:flex;flex-direction:column;justify-content:space-between;
+}
+.proof-card .who{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.proof-card .avatar{
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--brass);
+  background:color-mix(in srgb, var(--brass) 10%, var(--ink));
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 30px;
+  font-family:var(--sans);font-size:11px;font-weight:500;color:var(--brass);
+  letter-spacing:.04em;text-transform:none;
+}
+.proof-card .avatar::before{content:attr(data-init)}
+.proof-card .avatar-empty{border-style:dashed;background:transparent}
+.proof-card.placeholder{display:none}
+.proof-card blockquote{
+  margin:0;
+  font-family:var(--serif);font-size:18px;line-height:1.35;color:var(--bone);
+  font-variation-settings:"opsz" 72,"SOFT" 50;font-weight:380;letter-spacing:-0.012em;
+}
+.proof-card blockquote::before{content:"« "; color:var(--brass)}
+.proof-card blockquote::after{content:" »"; color:var(--brass)}
+.proof-card .meta{
+  margin-top:18px; display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em;
+}
+.proof-card .meta b{color:var(--bone);font-weight:500;font-family:var(--sans);font-size:13px;letter-spacing:0}
+
+/* ---------- about ---------- */
+.about{
+  display:grid; grid-template-columns: 1fr; gap:0; max-width:760px;
+}
+.about-text p{margin:0 0 18px; color:var(--bone-soft); font-size:16.5px; line-height:1.65}
+.about-meta{
+  margin-top:32px; display:grid;grid-template-columns:repeat(2,1fr);gap:20px 32px;
+  padding-top:30px;border-top:1px solid var(--hairline);
+}
+.about-meta dt{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.about-meta dd{margin:0;font-family:var(--serif);font-size:18px;font-variation-settings:"opsz" 72,"SOFT" 50;font-weight:380;letter-spacing:-0.012em;color:var(--bone)}
+
+/* ---------- FAQ ---------- */
+.faq-list{border-top:1px solid var(--hairline)}
+.faq-item{border-bottom:1px solid var(--hairline)}
+.faq-q{
+  width:100%;padding:28px 0; display:flex; align-items:baseline; gap:24px;
+  text-align:left; cursor:pointer;
+}
+.faq-q .num{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.14em;flex:0 0 60px}
+.faq-q .ttl{
+  flex:1; font-family:var(--serif);font-size:22px;line-height:1.25;color:var(--bone);
+  font-variation-settings:"opsz" 72,"SOFT" 50;font-weight:380;letter-spacing:-0.018em;
+}
+.faq-q .toggle{
+  flex:0 0 24px; width:24px;height:24px; position:relative;
+  border:1px solid var(--char); border-radius:50%;
+  transition:border-color .25s, background .25s;
+}
+.faq-q .toggle::before, .faq-q .toggle::after{
+  content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  background:var(--bone-soft); transition:transform .25s ease, background .25s ease;
+}
+.faq-q .toggle::before{width:10px;height:1px}
+.faq-q .toggle::after{width:1px;height:10px}
+.faq-item.open .faq-q .toggle{border-color:var(--brass); background:var(--brass)}
+.faq-item.open .faq-q .toggle::before{background:var(--ink)}
+.faq-item.open .faq-q .toggle::after{transform:translate(-50%,-50%) rotate(90deg); background:var(--ink); opacity:0}
+.faq-a{
+  max-height:0; overflow:hidden; transition:max-height .35s ease;
+}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-inner{
+  padding:0 0 30px 84px;
+  color:var(--mute); font-size:15.5px; line-height:1.65; max-width:70ch;
+}
+@media (max-width:760px){
+  .faq-q .num{display:none}
+  .faq-a-inner{padding-left:0}
+}
+
+/* ---------- qualification form ---------- */
+.qualify-form{
+  max-width:880px; margin:0 auto;
+  display:flex; flex-direction:column; gap:32px;
+}
+.qf-row{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+@media (max-width:640px){.qf-row{grid-template-columns:1fr}}
+.qf-field{display:flex; flex-direction:column; gap:8px}
+.qf-label{
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--brass);
+}
+.qf-field input{
+  font-family:var(--sans); font-size:16px;
+  background:transparent; color:var(--bone);
+  border:none; border-bottom:1px solid var(--char);
+  padding:12px 0;
+  border-radius:0;
+  transition:border-color .25s ease;
+}
+.qf-field input:focus{outline:none; border-bottom-color:var(--brass)}
+.qf-field input::placeholder{color:var(--mute-soft)}
+.qf-field input:invalid{box-shadow:none}
+.qf-field input:user-invalid{border-bottom-color:#A04E3D}
+
+.qf-radios{
+  border:none; padding:0; margin:0;
+  display:flex; flex-direction:column; gap:14px;
+}
+.qf-radios legend{padding:0; margin-bottom:6px}
+.qf-options{
+  display:flex; flex-wrap:wrap; gap:10px;
+}
+.qf-options label{
+  position:relative;
+  display:inline-flex; align-items:center;
+  padding:12px 18px;
+  border:1px solid var(--char);
+  cursor:pointer;
+  font-size:14px; color:var(--bone-soft);
+  transition:border-color .2s, background .2s, color .2s;
+  min-height:44px;
+}
+.qf-options label:hover{border-color:var(--brass); color:var(--bone)}
+.qf-options input{
+  position:absolute; opacity:0; pointer-events:none;
+}
+.qf-options input:checked + span{color:var(--brass); font-weight:500}
+.qf-options label:has(input:checked){
+  border-color:var(--brass);
+  background:color-mix(in srgb, var(--brass) 8%, transparent);
+}
+
+.qf-foot{
+  display:flex; flex-direction:column; gap:14px; margin-top:8px;
+  align-items:flex-start;
+}
+.qf-submit{align-self:flex-start; padding:18px 28px; min-height:54px}
+.qf-note{
+  font-family:var(--mono); font-size:11px; color:var(--mute);
+  letter-spacing:.04em; line-height:1.5; margin:0; max-width:50ch;
+}
+.qf-error{
+  color:#C77866; font-size:13px; font-family:var(--sans);
+  margin:0; display:none;
+}
+.qf-error.show{display:block}
+
+@media (max-width:480px){
+  .qualify-form{gap:24px}
+  .qf-options label{padding:10px 14px; font-size:13px}
+  .qf-submit{width:100%; align-self:stretch; justify-content:center}
+}
+
+/* ---------- final CTA ---------- */
+.final{
+  border-top:1px solid var(--hairline);
+  padding:140px 0;
+  position:relative;
+  overflow:hidden;
+}
+.final::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(900px 400px at 50% 100%, color-mix(in srgb, var(--brass) 12%, transparent), transparent 70%);
+  pointer-events:none;
+}
+.final-inner{position:relative; text-align:center; max-width:920px; margin:0 auto}
+.final-inner .eyebrow{display:inline-block; margin-bottom:36px}
+.final-inner h2{
+  font-size:clamp(40px, 5.6vw, 84px); margin:0 0 32px;
+}
+.final-inner h2 em{
+  font-style:italic;color:var(--brass);
+  font-variation-settings:"opsz" 144,"SOFT" 100,"WONK" 1;
+}
+.final-inner .lead{margin:0 auto 44px}
+.final-inner .hero-cta{justify-content:center}
+.final-trust{
+  margin-top:42px; padding-top:28px; border-top:1px solid var(--hairline);
+  display:flex;justify-content:center; gap:36px; flex-wrap:wrap;
+  font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.04em;
+}
+.final-trust span::before{content:"✓ "; color:var(--sage)}
+
+/* ---------- footer ---------- */
+footer{
+  padding:72px 0 48px;
+  border-top:1px solid var(--hairline);
+  font-size:13.5px; color:var(--mute);
+}
+.foot-grid{
+  display:grid;grid-template-columns: 2fr 1fr 1fr 1fr; gap:40px;
+  margin-bottom:60px;
+}
+@media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr; gap:30px}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+.foot-grid h3{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brass);margin:0 0 18px;font-weight:500;
+}
+.foot-grid ul{list-style:none;padding:0;margin:0}
+.foot-grid li{margin-bottom:10px}
+.foot-grid a:hover{color:var(--bone)}
+.foot-grid p{color:var(--mute);line-height:1.6;margin:0 0 14px}
+.foot-bottom{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap; gap:14px;
+  padding-top:28px; border-top:1px solid var(--hairline);
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+}
+.disclaimer{
+  margin-top:28px; padding:22px; border:1px solid var(--char);
+  font-size:12px; color:var(--mute-soft); line-height:1.55;
+}
+.disclaimer b{color:var(--mute);font-weight:500}
+
+/* ---------- reveal animations (progressive enhancement: hidden state only when JS-enabled) ---------- */
+.js-anim .reveal{opacity:0; transform:translateY(16px); transition:opacity .8s ease, transform .8s cubic-bezier(.22,.61,.36,1)}
+.js-anim .reveal.in{opacity:1; transform:none}
+.js-anim .reveal.d1{transition-delay:.08s}
+.js-anim .reveal.d2{transition-delay:.16s}
+.js-anim .reveal.d3{transition-delay:.24s}
+.js-anim .reveal.d4{transition-delay:.32s}
+
+/* clip-path reveal — для headlines (редакционное «открывание сверху вниз») */
+.js-anim .reveal-clip{
+  clip-path: inset(0 0 100% 0);
+  -webkit-clip-path: inset(0 0 100% 0);
+  transition: clip-path 900ms cubic-bezier(.65,0,.35,1), -webkit-clip-path 900ms cubic-bezier(.65,0,.35,1);
+  will-change: clip-path;
+}
+.js-anim .reveal-clip.in{
+  clip-path: inset(0 0 0 0);
+  -webkit-clip-path: inset(0 0 0 0);
+}
+
+/* variable-axis morph for hero/final em on entry (paired with .reveal-clip parent) */
+.js-anim .reveal-clip em,
+.js-anim .reveal-clip .h-display em{
+  transition: font-variation-settings 700ms cubic-bezier(.65,0,.35,1) 350ms;
+  font-variation-settings:"opsz" 144, "SOFT" 50, "WONK" 0;
+}
+.js-anim .reveal-clip.in em,
+.js-anim .reveal-clip.in .h-display em{
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+}
+
+/* scale-bar draw on entry */
+.scale-bar{
+  transform-origin:left center;
+  transform: scaleX(0);
+  transition: transform 1500ms cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+.scale-bar.in{ transform: scaleX(1); }
+.scale-step .pct, .scale-step .you b{
+  transition: transform 280ms cubic-bezier(.22,.61,.36,1), color 220ms;
+}
+@media (hover:hover){
+  .scale-step:hover .pct{ transform: translateY(-3px); color: var(--brass); }
+  .scale-step:hover .you b{ color: var(--brass); }
+}
+
+/* proof-line draw-on (CSS fallback; scroll-driven via @supports) */
+.proof-line{
+  fill: none;
+  stroke-dasharray: 1400; stroke-dashoffset: 1400;
+  transition: stroke-dashoffset 2400ms cubic-bezier(.22,.61,.36,1);
+}
+.proof-line.in{ stroke-dashoffset: 0; }
+.proof-fill{ opacity: 0; transition: opacity 900ms ease; }
+.proof-fill.in{ opacity: 1; }
+
+/* number-roll: tabular figures so width never jumps (no CLS) */
+.num-roll{
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  display:inline-block;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .js-anim .reveal,
+  .js-anim .reveal-clip,
+  .scale-bar,
+  .proof-line,
+  .proof-fill,
+  .scale-step .pct,
+  .scale-step .you b{
+    opacity:1; transform:none; transition:none;
+    clip-path:none; -webkit-clip-path:none;
+    stroke-dashoffset:0;
+  }
+}
+
+/* ---------- comparison cards (mobile) ---------- */
+.cmp-mobile{display:none}
+@media (max-width:640px){
+  .cmp{display:none}
+  .cmp-mobile{display:flex;flex-direction:column;gap:12px}
+  .cmp-card{
+    border:1px solid var(--char); padding:18px 18px 12px;
+    background:color-mix(in srgb, var(--slate) 60%, var(--ink));
+    border-radius:1px;
+  }
+  .cmp-card.us{
+    border:1px solid var(--brass); order:-1;
+    background:color-mix(in srgb, var(--brass) 7%, var(--slate));
+    position:relative;
+  }
+  .cmp-card.us::before{
+    content:""; position:absolute; left:-1px; top:0; width:3px; height:100%; background:var(--brass);
+  }
+  .cmp-card-h{
+    font-family:var(--mono); font-size:11px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--mute); margin:0 0 14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .cmp-card.us .cmp-card-h{color:var(--brass)}
+  .cmp-card-tag{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.16em;
+    color:var(--ink); background:var(--brass); padding:3px 7px;
+  }
+  .cmp-card ul{list-style:none;padding:0;margin:0}
+  .cmp-card li{
+    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+    padding:11px 0; border-bottom:1px dashed var(--hairline);
+    font-size:14px; color:var(--mute);
+  }
+  .cmp-card li:last-child{border-bottom:none}
+  .cmp-card li span{color:var(--bone-soft)}
+  .cmp-card li b{font-weight:500;font-family:var(--mono);font-size:13px}
+  .cmp-card li b.y{color:var(--sage)}
+  .cmp-card.us li b.y{color:var(--brass)}
+  .cmp-card li b.n{color:var(--mute-soft)}
+}
+
+/* ---------- lead-magnet persistent chip ---------- */
+.lm-chip{
+  position:fixed;
+  right:24px; bottom:24px;
+  z-index:55;
+  display:flex; align-items:center; gap:12px;
+  padding:14px 18px;
+  background:var(--slate);
+  border:1px solid var(--brass);
+  color:var(--bone);
+  font-family:var(--sans); font-size:13px; line-height:1.3;
+  border-radius:1px;
+  box-shadow:0 14px 40px rgba(0,0,0,.55);
+  transition:transform .25s ease, background .25s ease, border-color .25s ease;
+  max-width:300px;
+}
+.lm-chip:hover{
+  background:color-mix(in srgb, var(--brass) 12%, var(--slate));
+  transform:translateY(-2px);
+}
+.lm-icon{
+  width:32px; height:32px; flex:0 0 32px;
+  border:1px solid var(--brass);
+  display:inline-flex; align-items:center; justify-content:center;
+  color:var(--brass); border-radius:50%;
+}
+.lm-text{display:flex; flex-direction:column; gap:2px}
+.lm-text b{
+  font-family:var(--mono); font-size:10px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--brass); font-weight:500;
+}
+.lm-text span{
+  color:var(--bone-soft); font-size:13px; letter-spacing:-0.005em;
+}
+@media (max-width:760px){
+  .lm-chip{display:none}  /* on mobile — replaced by inline lm-card after hero */
+}
+
+/* inline lead-magnet card (after pillars, mobile + desktop fallback) */
+.lm-inline{
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  padding:22px 24px; margin-top:32px;
+  border:1px dashed var(--brass);
+  background:color-mix(in srgb, var(--brass) 5%, transparent);
+  border-radius:1px;
+}
+.lm-inline-icon{
+  width:42px; height:42px; flex:0 0 42px;
+  border:1px solid var(--brass); color:var(--brass);
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%;
+}
+.lm-inline-text{flex:1; min-width:200px}
+.lm-inline-text b{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--brass); display:block; margin-bottom:6px;
+}
+.lm-inline-text span{
+  color:var(--bone); font-family:var(--serif);
+  font-variation-settings:"opsz" 72,"SOFT" 50; font-weight:400;
+  font-size:18px; line-height:1.25; letter-spacing:-0.012em; display:block;
+}
+.lm-inline-cta{
+  font-family:var(--mono); font-size:12px; letter-spacing:.04em;
+  color:var(--brass); border-bottom:1px solid color-mix(in srgb, var(--brass) 35%, transparent);
+  padding:6px 0;
+  white-space:nowrap;
+}
+.lm-inline-cta:hover{border-bottom-color:var(--brass)}
+@media (max-width:480px){
+  .lm-inline{padding:18px;gap:14px}
+  .lm-inline-icon{width:36px;height:36px;flex:0 0 36px}
+  .lm-inline-text span{font-size:16px}
+}
+@media (prefers-reduced-motion: reduce){
+  .lm-chip{transition:none}
+  .lm-chip:hover{transform:none}
+}
+
+/* ---------- sticky mobile CTA bar ---------- */
+.m-cta{display:none}
+@media (max-width:760px){
+  .m-cta{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    position:fixed; left:12px; right:12px;
+    bottom:max(12px, env(safe-area-inset-bottom)); z-index:60;
+    padding:16px 22px; min-height:56px;
+    background:var(--brass); color:var(--ink);
+    font-family:var(--sans); font-size:15px; font-weight:500; letter-spacing:-0.005em;
+    border-radius:1px;
+    box-shadow:0 14px 40px rgba(0,0,0,.5);
+    transform:translateY(150%); transition:transform .35s cubic-bezier(.65,0,.35,1);
+  }
+  .m-cta.show{transform:translateY(0)}
+  .m-cta-arrow{font-family:var(--mono);margin-left:auto}
+  body{padding-bottom:80px}
+}
+
+/* ---------- MOBILE TIGHTENING (≤480) ---------- */
+@media (max-width:760px){
+  section.s{padding:64px 0}
+  .nav-inner{height:56px}
+  .nav-cta{
+    padding:11px 14px; min-height:44px;
+    border:1px solid var(--brass); color:var(--brass);
+    font-size:11.5px; display:inline-flex; align-items:center;
+  }
+  .nav-cta::after{content:""}
+  .brand{padding:6px 0; min-height:44px}
+}
+
+@media (max-width:480px){
+  /* ---- HERO ---- */
+  .hero{padding-top:88px;padding-bottom:40px}
+  .hero h1{font-size:38px; line-height:1.06; letter-spacing:-0.02em; margin-bottom:20px}
+  .hero .lead{font-size:15.5px; margin-bottom:24px; max-width:none}
+  .hero-cta{flex-direction:column; align-items:stretch; gap:10px}
+  .hero-cta .btn{width:100%; justify-content:center; padding:18px 22px; min-height:54px; font-size:15px}
+  .hero-tertiary{margin-top:14px; font-size:11px; color:var(--mute-soft)}
+  .hero-meta{flex-direction:column; align-items:flex-start; gap:8px; margin-bottom:24px}
+  .hero-meta .pill{
+    font-size:10.5px; max-width:100%;
+    padding:6px 9px;
+  }
+  .hero-meta .mono-tag{display:none}
+  .hero-side{margin-top:20px; padding:18px}
+  .hero-side h2.panel-h{font-size:10.5px; margin-bottom:14px}
+  .hero-side .glyph-row{font-size:12px;padding:11px 0}
+  .hero-grid{gap:32px}
+
+  /* ---- THREE PILLARS ---- */
+  .three-pillars{margin-top:48px}
+  .pillar{padding:18px 0}
+  .pillar .ttl{font-size:18px; margin-bottom:6px}
+  .pillar .desc{font-size:13.5px}
+  .pillar .num{margin-bottom:8px}
+
+  /* ---- SECTION HEADS ---- */
+  .s-head{margin-bottom:32px; gap:14px}
+  .s-head .right h2{font-size:30px; line-height:1.08}
+  .s-head .left .num{font-size:11px}
+
+  /* ---- PROBLEM ---- */
+  .problem-item{padding:18px 0; gap:14px}
+  .problem-item .ttl{font-size:17px}
+  .problem-item .desc{font-size:13.5px; line-height:1.5}
+
+  /* ---- EDUCATION MAP ---- */
+  .map-grid{grid-template-columns:repeat(2,1fr)}
+  .map-cell{min-height:140px; padding:18px 14px}
+  .map-cell .name{font-size:15px}
+  .map-cell .desc{font-size:12px; line-height:1.4}
+  .map-cell .glyph{width:34px;height:34px}
+  .map-cell .glyph svg{width:16px;height:16px}
+  .map-cell.flagship{
+    grid-column:1 / -1;
+    min-height:auto; padding:22px 18px;
+    background:color-mix(in srgb, var(--brass) 6%, var(--slate));
+  }
+  .map-cell.flagship::after{top:18px; right:14px}
+
+  /* ---- MECHANISM ---- */
+  .mech-visual{order:-1; margin-bottom:28px; padding:22px 18px}
+  .mech-visual h3.panel-h{font-size:10.5px;margin-bottom:18px}
+  .market-row{flex-direction:column; align-items:flex-start; gap:4px; padding:14px 0}
+  .market-row .label{font-size:11px}
+  .market-row .val{font-size:14px}
+  .market-row.anomaly .val{font-size:16px}
+  .regimes{grid-template-columns:1fr; gap:1px}
+  .regime{padding:14px 16px; display:flex; align-items:baseline; gap:14px}
+  .regime .nm{margin-bottom:0; flex:0 0 84px}
+  .regime .val{font-size:18px}
+  .regime .ds{margin-top:0; margin-left:auto; font-size:11px}
+  .mech-text p{font-size:15.5px}
+  .mech-text .quote{font-size:18px; padding-left:16px}
+
+  /* ---- OFFER STACK ---- */
+  .stack-row{
+    grid-template-columns:1fr auto; gap:10px; padding:20px 0;
+  }
+  .stack-row .num{
+    grid-column:1 / -1; font-size:11px; margin-bottom:-6px;
+  }
+  .stack-row .name{font-size:17px}
+  .stack-row .name .desc{font-size:13px; margin-top:4px}
+  .stack-row .price{
+    grid-column:2; padding-left:0; text-align:right;
+    align-self:start; font-size:13px; white-space:nowrap;
+  }
+  .stack-row .price .strike{display:none}
+  .stack-total{grid-template-columns:1fr;gap:8px}
+  .stack-total .label{grid-column:1;padding-left:0;font-size:20px}
+  .stack-total .price{grid-column:1;padding-left:0;text-align:left;font-size:18px}
+  .stack-payline{flex-direction:column;align-items:flex-start;gap:10px;padding:18px 0}
+  .stack-payline .you-pay{font-size:24px}
+  .bonus-strip{padding:20px 18px;margin-top:22px}
+  .bonus-strip .h-3{font-size:20px}
+
+  /* ---- PRICING SCALE ---- */
+  .scale-wrap{padding:24px 18px}
+  .scale-headline{font-size:22px; max-width:none; margin-bottom:18px}
+  .scale-track{
+    display:grid; grid-template-columns:1fr; gap:0; height:auto; margin:24px 0;
+  }
+  .scale-step{
+    display:grid; grid-template-columns:1fr auto auto; gap:14px;
+    align-items:baseline; padding:18px 0;
+    border-right:none; border-bottom:1px dashed var(--hairline);
+    position:relative; padding-left:26px;
+  }
+  .scale-step:last-child{border-bottom:none}
+  /* visual decreasing brass bar via ::before — restores narrative on mobile */
+  .scale-step::before{
+    content:""; position:absolute; left:0; top:50%; transform:translateY(-50%);
+    width:18px; height:2px; background:var(--brass); opacity:1;
+  }
+  .scale-step:nth-child(2)::before{width:14px; opacity:.8}
+  .scale-step:nth-child(3)::before{width:10px; opacity:.6}
+  .scale-step:nth-child(4)::before{width:6px; opacity:.4}
+  .scale-bar{display:none}
+  .scale-step .month{font-size:11px; margin-bottom:0; grid-column:1; align-self:center}
+  .scale-step .pct{font-size:42px; line-height:1; grid-column:2; align-self:center}
+  .scale-step .you{font-size:11px; margin-top:0; grid-column:3; text-align:right; min-width:96px; align-self:center; color:var(--mute)}
+  .scale-foot{flex-direction:column;align-items:flex-start;gap:10px;padding-top:18px}
+  .scale-foot .pledge{font-size:16px}
+  .pledge-60-head .h-3{font-size:20px}
+  .pledge-60-val{font-size:64px}
+
+  /* ---- PROOF ---- */
+  .proof-chart{padding:22px 18px; min-height:auto}
+  .proof-chart h3.panel-h{font-size:10.5px}
+  .chart-meta .big{font-size:36px}
+  .proof-card{padding:20px 18px}
+  .proof-card blockquote{font-size:16px; line-height:1.4}
+  .proof-card .meta{flex-direction:column; align-items:flex-start; gap:6px}
+
+  /* ---- ABOUT ---- */
+  .about-text p{font-size:15px; line-height:1.55}
+  .about-meta{grid-template-columns:1fr 1fr; gap:14px 20px}
+  .about-meta dd{font-size:16px}
+
+  /* ---- FAQ ---- */
+  .faq-q{padding:20px 0; gap:14px}
+  .faq-q .ttl{font-size:17px; line-height:1.3}
+  .faq-q .toggle{width:28px; height:28px; flex:0 0 28px}
+  .faq-q .toggle::before{width:12px}
+  .faq-q .toggle::after{height:12px}
+  .faq-a-inner{padding:0 0 24px 0; font-size:14.5px; line-height:1.55}
+  .faq-item.open .faq-a{max-height:1200px}
+
+  /* ---- FINAL CTA ---- */
+  .final{padding:80px 0 40px}
+  .final-inner h2{font-size:36px}
+  .final-inner .lead{font-size:15.5px; margin-bottom:28px}
+  .final-inner .hero-cta{flex-direction:column; align-items:stretch; gap:10px}
+  .final-inner .hero-cta .btn{width:100%; justify-content:center; min-height:54px}
+  .final-trust{gap:14px; flex-direction:column; margin-top:32px}
+
+  /* ---- FOOTER ---- */
+  footer{padding:48px 0 32px}
+  .foot-grid{grid-template-columns:1fr; gap:28px; margin-bottom:32px}
+  .foot-grid li{margin-bottom:0}
+  .foot-grid a{display:inline-block; padding:10px 0; min-height:44px}
+  .foot-bottom{flex-direction:column; align-items:flex-start; gap:8px; font-size:11.5px}
+  .disclaimer{padding:18px; font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="atmos"></div>
+<div class="grain"></div>
+
+<!-- ============================== NAV ============================== -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark"></span>
+      <span>Stablefold</span>
+    </a>
+    <div class="nav-links">
+      <a href="#mechanism">Как работает</a>
+      <a href="#scale">Условия</a>
+      <a href="#proof">Результаты</a>
+      <a href="#about">Кто мы</a>
+      <a href="#faq">Вопросы</a>
+    </div>
+    <a href="#apply" class="nav-cta">Оставить заявку</a>
+  </div>
+</nav>
+
+<!-- STICKY MOBILE CTA BAR -->
+<a href="#apply" class="m-cta" aria-label="Записаться на разбор">
+  <span class="m-cta-label">Записаться на разбор</span>
+  <span class="m-cta-arrow" aria-hidden="true">→</span>
+</a>
+
+<!-- LEAD MAGNET PERSISTENT CHIP -->
+<!-- TODO(real-data): подставить реальную ссылку на PDF / Tally-форму сбора email -->
+<a href="#leadmagnet" class="lm-chip">
+  <span class="lm-icon" aria-hidden="true">
+    <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M7 1v9M3 6l4 4 4-4M2 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </span>
+  <span class="lm-text">
+    <b>Бесплатно</b>
+    <span>7 способов заработать на USDT — PDF</span>
+  </span>
+</a>
+
+<main id="content">
+
+<!-- ============================== HERO ============================== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-meta reveal">
+          <!-- TODO(real-data): когда будут реальные даты когорт — заменить на «Старт {дата} · {N} мест» -->
+          <span class="pill"><span class="live-dot"></span>Когорта 12 операторов · запись по собеседованию</span>
+          <span class="mono-tag">Stablefold Operator Track</span>
+        </div>
+
+        <h1 class="h-display reveal-clip">
+          Стабильный доход на ваших стейблкоинах за <em>60 дней</em> — или вы не платите ни цента, а мы возмещаем все комиссии&nbsp;сети.
+        </h1>
+
+        <p class="lead reveal d2">
+          <b style="color:var(--bone);font-weight:500">Stablefold Operator Track</b> — программа для тех, кто устал от депозитов и не доверяет крипте.
+          Деньги остаются на вашем кошельке. Наша доля снижается с 25% до 10% по мере того, как вы становитесь самостоятельнее.
+        </p>
+
+        <div class="hero-cta reveal d3">
+          <a href="#apply" class="btn btn-primary">
+            Оставить заявку
+            <svg class="arrow" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+          </a>
+          <a href="#mechanism" class="btn btn-ghost">
+            Как это работает
+            <svg class="arrow" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 4l5 6 5-6" stroke="currentColor" stroke-width="1.4"/></svg>
+          </a>
+        </div>
+
+        <div class="hero-tertiary reveal d4">
+          Не курс. Не сигналы. Не доверительное управление.
+        </div>
+      </div>
+
+      <aside class="hero-side reveal d3" aria-label="Пример рыночной аномалии">
+        <h2 class="panel-h">Пример сделки · 12 мая 2026 · 14:42 UTC</h2>
+        <div class="glyph-row">
+          <span class="label">DEX</span>
+          <span class="val">1inch · Arbitrum</span>
+        </div>
+        <div class="glyph-row">
+          <span class="label">Пара</span>
+          <span class="val">USDC → USDT</span>
+        </div>
+        <div class="glyph-row">
+          <span class="label">Рыночная цена</span>
+          <span class="val">1.0001</span>
+        </div>
+        <div class="glyph-row">
+          <span class="label">Лимитный ордер кита</span>
+          <span class="val brass">0.9847 <span class="delta">−1.54%</span></span>
+        </div>
+        <div class="glyph-row">
+          <span class="label">Объём</span>
+          <span class="val">$3,820,000</span>
+        </div>
+        <div class="glyph-row">
+          <span class="label">Расчётная доходность</span>
+          <span class="val sage">+1.41%</span>
+        </div>
+        <div class="glyph-row">
+          <span class="label">Время удержания</span>
+          <span class="val">~ 4 минуты</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="three-pillars">
+      <div class="pillar reveal d1">
+        <div class="num">I.</div>
+        <div class="ttl">Деньги под вашим контролем</div>
+        <div class="desc">Капитал хранится на вашем кошельке. Мы не получаем приватных ключей и не принимаем депозитов.</div>
+      </div>
+      <div class="pillar reveal d2">
+        <div class="num">II.</div>
+        <div class="ttl">Платите только из прибыли</div>
+        <div class="desc">Шкала 25 → 20 → 15 → 10%. Если вы не заработали — вы не платите ничего.</div>
+      </div>
+      <div class="pillar reveal d3">
+        <div class="num">III.</div>
+        <div class="ttl"><span class="num-roll" data-to="5">0</span>—<span class="num-roll" data-to="12">0</span>% дохода в месяц</div>
+        <div class="desc">Реальный диапазон по 26 неделям статистики. Сделки on-chain — каждая проверяема через wallet команды.</div>
+      </div>
+    </div>
+
+    <!-- INLINE LEAD MAGNET (visible on all viewports, but on desktop the floating chip is also shown) -->
+    <a href="#leadmagnet" class="lm-inline reveal">
+      <span class="lm-inline-icon" aria-hidden="true">
+        <svg viewBox="0 0 14 14" fill="none" width="16" height="16"><path d="M7 1v9M3 6l4 4 4-4M2 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="lm-inline-text">
+        <b>Бесплатно — без регистрации</b>
+        <span>«7 способов заработать на USDT, не торгуя его» — PDF на 12 страниц</span>
+      </span>
+      <span class="lm-inline-cta">Скачать PDF →</span>
+    </a>
+  </div>
+</header>
+
+<!-- ============================== PROBLEM ============================== -->
+<section class="s" id="problem">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">01 / 06</span>
+        <span class="eyebrow">Контекст</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Вы пришли сюда, потому что<br>знакомо хотя бы одно из этого.</h2>
+      </div>
+    </div>
+
+    <div class="problem-list reveal">
+      <div class="problem-item">
+        <div class="idx">A.</div>
+        <div>
+          <h3 class="ttl">Депозит обесценивается быстрее, чем растёт</h3>
+          <p class="desc">Реальная инфляция съедает капитал. Банк даёт ставку, которая едва покрывает её, и только если сидеть в рублях.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="idx">B.</div>
+        <div>
+          <h3 class="ttl">В крипту страшно — кругом скам</h3>
+          <p class="desc">Каждый второй «эксперт» оказывается пирамидой. Любая «уникальная стратегия» выглядит как обещание из 2010-х.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="idx">C.</div>
+        <div>
+          <h3 class="ttl">Курсы за $2 000 ничего не дают</h3>
+          <p class="desc">Заплатили вперёд, посмотрели вебинары, открыли терминал — и не знаете, с чего начать. Ответственности — ноль.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="idx">D.</div>
+        <div>
+          <h3 class="ttl">Доверительное управление = «отдай и надейся»</h3>
+          <p class="desc">Деньги уходят на чужой счёт. Если у фонда проблемы или просто плохой месяц — клиент узнаёт последним.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="idx">E.</div>
+        <div>
+          <h3 class="ttl">Сигнальные каналы — лотерея</h3>
+          <p class="desc">Подписка $50–300 в месяц вне зависимости от результата. Половина сделок убыточны, ответственного нет.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="idx">F.</div>
+        <div>
+          <h3 class="ttl">Плечи и фьючерсы уже забрали достаточно</h3>
+          <p class="desc">Возможно, вы уже прошли цикл 2020–2022. Вернулись к идее «нужен системный, не зависящий от рынка доход».</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== EDUCATION (CRYPTO MAP) ============================== -->
+<section class="s" id="education" style="background:color-mix(in srgb, var(--slate) 40%, var(--ink))">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">02 / 06</span>
+        <span class="eyebrow">Что такое крипта</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Крипта — это не «битки».<br>Это <em style="color:var(--brass);font-style:italic;font-variation-settings:'opsz' 96,'SOFT' 100,'WONK' 1">экосистема финансовых инструментов.</em></h2>
+        <p class="lead reveal d1" style="margin-top:22px">
+          Большинство людей думают о крипте как о биткоине и казино с плечами.
+          На самом деле — это десятки разных способов зарабатывать на цифровых активах,
+          с разным уровнем риска. Вот карта основных инструментов. Мы фокусируемся
+          на одном — самом стабильном.
+        </p>
+      </div>
+    </div>
+
+    <div class="map-grid reveal">
+      <div class="map-cell flagship">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2v10" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">DEX-арбитраж стейблкоинов</div>
+        <div class="desc">Доход на ценовых аномалиях USDT/USDC. Без волатильности. Это наш основной инструмент.</div>
+      </div>
+      <div class="map-cell">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">Спот</div>
+        <div class="desc">Покупка криптоактивов «как акций». Рост портфеля = рост цены.</div>
+      </div>
+      <div class="map-cell">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><path d="M2 11l4-8 3 5 3-3" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">Стейкинг</div>
+        <div class="desc">Доход за «удержание» актива в сети — аналог банковского депозита, но в крипте.</div>
+      </div>
+      <div class="map-cell">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><path d="M3 3h8v8H3z M5 5h4v4H5z" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">Рестейкинг</div>
+        <div class="desc">Доход поверх стейкинга через сторонние протоколы — слой выше базового.</div>
+      </div>
+      <div class="map-cell">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l5-5 5 5-5 5z" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">Лендинг</div>
+        <div class="desc">Сдаёте свою крипту в долг под процент. Аналог займа, но без банка.</div>
+      </div>
+      <div class="map-cell">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12C2 7 6 2 12 2" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">Airdrop / Retrodrop</div>
+        <div class="desc">Бесплатные раздачи токенов проектов за активность в сети. Иногда тысячи долларов с одного кошелька.</div>
+      </div>
+      <div class="map-cell">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.4"/><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">DeFi / Farming</div>
+        <div class="desc">Предоставление ликвидности и работа с протоколами децентрализованных финансов.</div>
+      </div>
+      <div class="map-cell">
+        <div class="glyph"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11l4-8 4 8" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="name">Launchpool / IDO</div>
+        <div class="desc">Ранний вход в новые проекты. Максимальный потенциал, максимальный риск.</div>
+      </div>
+    </div>
+
+    <p class="mono-tag reveal" style="margin-top:30px;text-align:center">
+      В рамках наставничества мы разбираем каждый из этих инструментов. <span style="color:var(--brass)">Главный — арбитраж стейблкоинов.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================== MECHANISM ============================== -->
+<section class="s" id="mechanism">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">03 / 06</span>
+        <span class="eyebrow">Механика</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Как зарабатывает <em style="color:var(--brass);font-style:italic;font-variation-settings:'opsz' 96,'SOFT' 100,'WONK' 1">скринер.</em></h2>
+      </div>
+    </div>
+
+    <div class="mech">
+      <div class="mech-text reveal">
+        <p>На децентрализованных биржах (DEX) цена формируется не маркет-мейкерами, а реальной ликвидностью. Когда крупный игрок («кит») хочет быстро обменять большой объём стейблкоинов — он не может ждать рыночного исполнения.</p>
+        <p>Чтобы привлечь ликвидность, он ставит лимитный ордер <i>ниже</i> рыночной цены. Возникает арбитражная аномалия — не из-за риска, а из-за технических ограничений ликвидности.</p>
+
+        <blockquote class="quote">
+          Мы не торгуем направление рынка.<br>
+          Мы зарабатываем на математической разнице цен,<br>
+          которая возникает при крупных переводах.
+        </blockquote>
+
+        <p>Наш собственный скринер автоматически отслеживает 1inch, Uniswap, KyberSwap, Revolve и другие площадки, фильтрует только ликвидные пары USDT/USDC и присылает вам готовые сигналы. Вы не ищете сделки руками — вы получаете их в готовом виде.</p>
+
+        <p style="color:var(--mute);font-size:14px;margin-top:24px">
+          <span class="mono-tag" style="color:var(--brass)">→ </span>
+          Это не торговля. Не плечи. Не предсказание.
+        </p>
+      </div>
+
+      <div class="mech-visual reveal d1">
+        <h3 class="panel-h">Типичная аномалия · USDC / USDT</h3>
+        <div class="market-row">
+          <span class="label">Рыночная цена</span>
+          <span class="val">1 USDC = 1.0001 USDT</span>
+        </div>
+        <div class="market-row anomaly">
+          <span class="label">Ордер кита</span>
+          <span class="val">1 USDC = 0.9847 USDT</span>
+        </div>
+        <div class="market-row">
+          <span class="label">Дисконт</span>
+          <span class="val sage" style="color:var(--sage);font-family:var(--mono)">−1.54%</span>
+        </div>
+        <div class="market-row">
+          <span class="label">Сеть · газ · комиссии</span>
+          <span class="val" style="color:var(--mute)">≈ 0.13%</span>
+        </div>
+        <div class="market-row" style="border-bottom:none;border-top:1px solid var(--brass);margin-top:8px;padding-top:18px">
+          <span class="label" style="color:var(--brass)">Чистая прибыль сделки</span>
+          <span class="val" style="color:var(--bone);font-size:18px">+1.41%</span>
+        </div>
+
+        <div class="regimes">
+          <div class="regime">
+            <div class="nm">Консерв.</div>
+            <div class="val">0.65 — 1.56<sup style="font-size:.5em;color:var(--mute);font-family:var(--sans)">%</sup></div>
+            <div class="ds">от $3.5M ордеров</div>
+          </div>
+          <div class="regime">
+            <div class="nm">Умерен.</div>
+            <div class="val">1.00 — 2.15<sup style="font-size:.5em;color:var(--mute);font-family:var(--sans)">%</sup></div>
+            <div class="ds">$1.5M — $15M</div>
+          </div>
+          <div class="regime">
+            <div class="nm">Агресс.</div>
+            <div class="val">2.10 — 2.99<sup style="font-size:.5em;color:var(--mute);font-family:var(--sans)">%</sup></div>
+            <div class="ds">от $3.5M до $60M</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== OFFER STACK ============================== -->
+<section class="s" id="stack" style="background:color-mix(in srgb, var(--slate) 40%, var(--ink))">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">04 / 06</span>
+        <span class="eyebrow">Что входит</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Operator Track — это<br>девять инструментов <em style="color:var(--brass);font-style:italic;font-variation-settings:'opsz' 96,'SOFT' 100,'WONK' 1">в одной программе.</em></h2>
+      </div>
+    </div>
+
+    <div class="stack reveal">
+      <div class="stack-row">
+        <div class="num">01.</div>
+        <div class="name">Скринер лимитных ордеров на DEX
+          <span class="desc">Собственная программа. Сканирует 6 крупнейших DEX, отслеживает ордера ниже рынка по USDT/USDC, фильтрует по объёму и режиму риска.</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$1 200 / мес</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">02.</div>
+        <div class="name">Личный куратор
+          <span class="desc">Сопровождение в чате, разбор каждой сделки в первые недели, ответы на вопросы в течение часа.</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$800 / мес</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">03.</div>
+        <div class="name">Закрытое сообщество клиентов
+          <span class="desc">Чат действующих клиентов: разбор сделок, обмен опытом, личные результаты. Прозрачность как культура.</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$300 / мес</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">04.</div>
+        <div class="name">Образовательная программа по крипте
+          <span class="desc">Спот, стейкинг, рестейкинг, лендинг, airdrop, retrodrop, DeFi, launchpool — структурно, без воды. Ваш капитал работает в нескольких слоях.</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$2 000 / разово</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">05.</div>
+        <div class="name">Еженедельная отчётность
+          <span class="desc">Каждую субботу — сводка по вашему портфелю. Сделки, результаты, наша доля, ваш чистый доход. Прозрачно, до цента.</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$200 / мес</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">06.</div>
+        <div class="name">Настройка горячего кошелька с нуля
+          <span class="desc">Если вы только заходите в крипту — за один созвон выводим вас «в готовое состояние»: кошелёк, безопасность, первый перевод.</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$500 / разово</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">07.</div>
+        <div class="name">Прямой Telegram-канал с основателем — первые 30 дней
+          <span class="desc">Вы пишете лично основателю до первого месячного результата, а не в общий чат. Снимает страх «попаду на джуна-куратора».</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$1 500 / 30 дней</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">08.</div>
+        <div class="name">Onchain-аудит вашего кошелька — раз в квартал
+          <span class="desc">Отчёт по address hygiene, газу, неиспользованной ликвидности и потенциальным airdrop-возможностям из истории транзакций.</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$400 / квартал</div>
+      </div>
+      <div class="stack-row">
+        <div class="num">09.</div>
+        <div class="name">План выхода в фиат под вашу юрисдикцию
+          <span class="desc">2–3 проверенных P2P/обменника под вашу страну, лимиты, риски, налоговые последствия. Снимает возражение «как снимать».</span>
+        </div>
+        <div class="price"><span class="strike">эквивалент</span>$300 / разово</div>
+      </div>
+
+      <div class="stack-total">
+        <div class="label">Совокупная ценность за 6 месяцев — <em>≈ <span class="num-roll" data-to="22">0</span>&nbsp;200&nbsp;$</em></div>
+        <div class="price">$22 200</div>
+      </div>
+
+      <div class="stack-payline">
+        <div class="you-pay">Цена входа в <em>Operator Track</em> сегодня — $0</div>
+        <div>Платите только из прибыли · 25 → 10%</div>
+      </div>
+
+      <!-- BONUS BLOCK -->
+      <div class="bonus-strip reveal">
+        <div class="bonus-head">
+          <span class="eyebrow" style="display:inline-block;margin-bottom:14px">+ Бонус для первой когорты</span>
+          <h3 class="h-3" style="margin:0 0 14px">Capital Recovery Playbook</h3>
+          <p style="color:var(--mute);font-size:14.5px;line-height:1.55;margin:0;max-width:48ch">
+            PDF-чеклист «как пережить чёрного лебедя в крипте за 7 шагов». Написан на базе цикла 2022 года.
+            Эквивалентная стоимость — $400. Только для тех, кто стартует в первой когорте.
+          </p>
+        </div>
+        <div class="bonus-meta">
+          <div class="bonus-tag">PDF · 18 страниц</div>
+          <div class="bonus-value">эквивалент <b>$400</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PRICING / RISK REVERSAL ============================== -->
+<section class="s" id="scale">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">05 / 06</span>
+        <span class="eyebrow">Условия</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Мы зарабатываем,<br><em style="color:var(--brass);font-style:italic;font-variation-settings:'opsz' 96,'SOFT' 100,'WONK' 1">только когда зарабатываете вы.</em></h2>
+      </div>
+    </div>
+
+    <div class="scale-wrap reveal">
+      <h3 class="scale-headline">Шкала комиссии — от чистой прибыли,<br>с убыванием по мере вашей самостоятельности.</h3>
+
+      <div class="scale-track">
+        <div class="scale-bar"></div>
+        <div class="scale-step">
+          <div class="month">Месяц 1 — 2</div>
+          <div class="pct">25<sup>%</sup></div>
+          <div class="you">вам остаётся <b>75%</b></div>
+        </div>
+        <div class="scale-step">
+          <div class="month">Месяц 3 — 4</div>
+          <div class="pct">20<sup>%</sup></div>
+          <div class="you">вам остаётся <b>80%</b></div>
+        </div>
+        <div class="scale-step">
+          <div class="month">Месяц 5 — 6</div>
+          <div class="pct">15<sup>%</sup></div>
+          <div class="you">вам остаётся <b>85%</b></div>
+        </div>
+        <div class="scale-step">
+          <div class="month">После 6 месяца</div>
+          <div class="pct">10<sup>%</sup></div>
+          <div class="you">вам остаётся <b>90%</b></div>
+        </div>
+      </div>
+
+      <div class="scale-foot">
+        <div class="pledge"><em>Не заработали</em> — не заплатили ничего.</div>
+        <div class="mono-tag">расчёт раз в неделю · выплаты в субботу</div>
+      </div>
+    </div>
+
+    <!-- 60-DAY GUARANTEE PLEDGE -->
+    <div class="pledge-60 reveal">
+      <div class="pledge-60-head">
+        <span class="eyebrow" style="display:inline-block;margin-bottom:14px">Pledge №2 · Гарантия первой прибыли</span>
+        <h3 class="h-3" style="margin:0 0 14px">Если за <em style="color:var(--brass);font-style:italic;font-variation-settings:'opsz' 72,'SOFT' 100,'WONK' 1">60 дней</em> у вас нет ни одной прибыльной сделки —</h3>
+        <p class="lead" style="margin:0">
+          мы возмещаем 100% всех комиссий сети, которые вы заплатили блокчейну за этот период,
+          и бесплатно работаем с вами третий месяц лично с основателем. Это второй слой над «не заработали — не заплатили»:
+          вы не теряете ни денег, ни времени.
+        </p>
+      </div>
+      <div class="pledge-60-side">
+        <div class="pledge-60-stat">
+          <span class="pledge-60-label">срок гарантии</span>
+          <span class="pledge-60-val"><span class="num-roll" data-to="60">0</span></span>
+          <span class="pledge-60-unit">дней с первой сделки</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- comparison -->
+    <div style="margin-top:80px">
+      <h3 class="h-3 reveal" style="margin-bottom:28px">Чем мы отличаемся от того, что уже пробовали.</h3>
+      <!-- MOBILE: stacked cards version (table is hidden on ≤640) -->
+      <div class="cmp-mobile reveal" aria-hidden="true">
+        <article class="cmp-card us">
+          <header class="cmp-card-h">Stablefold <span class="cmp-card-tag">мы</span></header>
+          <ul>
+            <li><span>Платите вперёд</span><b class="y">нет</b></li>
+            <li><span>Деньги остаются у вас</span><b class="y">да</b></li>
+            <li><span>Платите только из прибыли</span><b class="y">да</b></li>
+            <li><span>Личное сопровождение</span><b class="y">да</b></li>
+            <li><span>Не зависит от рынка</span><b class="y">да</b></li>
+            <li><span>Гарантия результата</span><b class="y">60 дней</b></li>
+          </ul>
+        </article>
+        <article class="cmp-card">
+          <header class="cmp-card-h">Курсы по крипте</header>
+          <ul>
+            <li><span>Платите вперёд</span><b class="n">да · $1—3k</b></li>
+            <li><span>Деньги остаются у вас</span><b class="y">да</b></li>
+            <li><span>Платите только из прибыли</span><b class="n">нет</b></li>
+            <li><span>Личное сопровождение</span><b class="n">нет</b></li>
+            <li><span>Гарантия результата</span><b class="n">нет</b></li>
+          </ul>
+        </article>
+        <article class="cmp-card">
+          <header class="cmp-card-h">Сигнальные каналы</header>
+          <ul>
+            <li><span>Платите вперёд</span><b class="n">подписка</b></li>
+            <li><span>Деньги остаются у вас</span><b class="y">да</b></li>
+            <li><span>Платите только из прибыли</span><b class="n">нет</b></li>
+            <li><span>Личное сопровождение</span><b class="n">нет</b></li>
+            <li><span>Гарантия результата</span><b class="n">нет</b></li>
+          </ul>
+        </article>
+        <article class="cmp-card">
+          <header class="cmp-card-h">Доверительное управление</header>
+          <ul>
+            <li><span>Платите вперёд</span><b class="n">депозит</b></li>
+            <li><span>Деньги остаются у вас</span><b class="n">нет</b></li>
+            <li><span>Платите только из прибыли</span><b class="n">частично</b></li>
+            <li><span>Личное сопровождение</span><b class="n">нет</b></li>
+            <li><span>Гарантия результата</span><b class="n">нет</b></li>
+          </ul>
+        </article>
+      </div>
+
+      <table class="cmp reveal">
+        <caption class="visually-hidden">Сравнение Stablefold с альтернативами по 5 параметрам</caption>
+        <thead>
+          <tr>
+            <th scope="col"><span class="visually-hidden">Параметр</span></th>
+            <th scope="col">Курсы</th>
+            <th scope="col">Сигнальные каналы</th>
+            <th scope="col">Доверительное управление</th>
+            <th scope="col" class="us">Stablefold</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Платите вперёд</th>
+            <td><span class="n">да · $1 — 3k</span></td>
+            <td><span class="n">подписка</span></td>
+            <td><span class="n">да · депозит</span></td>
+            <td class="us"><span class="y us">нет</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Деньги остаются у вас</th>
+            <td><span class="y">да</span></td>
+            <td><span class="y">да</span></td>
+            <td><span class="n">нет</span></td>
+            <td class="us"><span class="y us">да</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Платите только из прибыли</th>
+            <td><span class="n">нет</span></td>
+            <td><span class="n">нет</span></td>
+            <td><span class="n">частично</span></td>
+            <td class="us"><span class="y us">да</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Личное сопровождение</th>
+            <td><span class="n">нет</span></td>
+            <td><span class="n">нет</span></td>
+            <td><span class="n">нет</span></td>
+            <td class="us"><span class="y us">да</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Не зависит от рынка</th>
+            <td><span class="n">—</span></td>
+            <td><span class="n">нет</span></td>
+            <td><span class="n">нет</span></td>
+            <td class="us"><span class="y us">да</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Гарантия результата</th>
+            <td><span class="n">нет</span></td>
+            <td><span class="n">нет</span></td>
+            <td><span class="n">нет</span></td>
+            <td class="us"><span class="y us">60 дней</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PROOF ============================== -->
+<section class="s" id="proof" style="background:color-mix(in srgb, var(--slate) 40%, var(--ink))">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">06 / 06</span>
+        <span class="eyebrow">Результаты</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Цифры, а не обещания.</h2>
+        <p class="lead reveal d1" style="margin-top:22px">
+          Мы не показываем «х2 за месяц». Мы показываем стабильный недельный доход
+          на стейблкоинах в трёх режимах риска. Прозрачная статистика обновляется
+          еженедельно по итогам реальных сделок.
+        </p>
+      </div>
+    </div>
+
+    <div class="proof-grid reveal">
+      <div class="proof-chart">
+        <h3 class="panel-h">Совокупная доходность · режим «Умеренный» · последние 26 недель</h3>
+        <div class="chart-meta">
+          <div class="big">+<span class="num-roll" data-to="34.6">0</span><sup>%</sup></div>
+          <div class="small">
+            ноя 2025 — май 2026<br>
+            средняя неделя · +1.18%
+          </div>
+        </div>
+
+        <!-- inline chart -->
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;margin-top:18px">
+          <defs>
+            <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#B89968" stop-opacity="0.30"/>
+              <stop offset="100%" stop-color="#B89968" stop-opacity="0"/>
+            </linearGradient>
+            <pattern id="grid" width="60" height="44" patternUnits="userSpaceOnUse">
+              <path d="M60 0H0V44" fill="none" stroke="#262A31" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="600" height="220" fill="url(#grid)"/>
+          <!-- baseline -->
+          <line x1="0" y1="200" x2="600" y2="200" stroke="#262A31" stroke-width="1"/>
+          <!-- area -->
+          <path class="proof-fill" d="M0,200 L0,190 L24,184 L48,178 L72,182 L96,170 L120,162 L144,158 L168,150 L192,154 L216,140 L240,132 L264,128 L288,118 L312,110 L336,114 L360,98 L384,92 L408,84 L432,80 L456,72 L480,66 L504,58 L528,52 L552,44 L576,38 L600,32 L600,200 Z" fill="url(#g)"/>
+          <!-- line -->
+          <path class="proof-line" d="M0,190 L24,184 L48,178 L72,182 L96,170 L120,162 L144,158 L168,150 L192,154 L216,140 L240,132 L264,128 L288,118 L312,110 L336,114 L360,98 L384,92 L408,84 L432,80 L456,72 L480,66 L504,58 L528,52 L552,44 L576,38 L600,32" fill="none" stroke="#B89968" stroke-width="1.5"/>
+          <!-- end dot -->
+          <circle cx="600" cy="32" r="3.5" fill="#EDE5D3"/>
+          <circle cx="600" cy="32" r="6" fill="none" stroke="#B89968" stroke-width="1"/>
+        </svg>
+
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:14px;letter-spacing:.04em">
+          <span>нед. 1</span><span>нед. 8</span><span>нед. 16</span><span>нед. 26</span>
+        </div>
+
+        <!-- TODO(real-data): подставить реальный публичный wallet команды и ссылку на Arbiscan/Etherscan -->
+        <div class="onchain-verify">
+          <span class="onchain-label">Wallet команды</span>
+          <code class="onchain-addr">0x71C9…b3e4</code>
+          <a href="#" class="onchain-link">Проверить on-chain →</a>
+        </div>
+
+        <p class="mono-tag" style="margin-top:14px;color:var(--mute-soft);font-size:11px">
+          * Данные по сделкам на собственном капитале команды и тестовых клиентах. Прошлая доходность не гарантирует будущую.
+        </p>
+      </div>
+
+      <div class="proof-side">
+        <div class="proof-card">
+          <div>
+            <div class="who"><span class="avatar" data-init="АМ" aria-hidden="true"></span>Клиент · 4 месяца с проектом</div>
+            <blockquote>
+              За первые два месяца окупил то, что год назад потерял на курсе по фьючерсам. И впервые понял, как именно делается этот доход.
+            </blockquote>
+          </div>
+          <div class="meta">
+            <span><b>Алексей М.</b> · депозит $12 000</span>
+            <span>+9.3% / мес</span>
+          </div>
+        </div>
+
+        <div class="proof-card">
+          <div>
+            <div class="who"><span class="avatar" data-init="ИК" aria-hidden="true"></span>Клиент · 6 месяцев с проектом</div>
+            <blockquote>
+              Главное — что деньги у меня. Я вижу каждую транзакцию в своём кошельке. Это первое место в крипте, где не страшно.
+            </blockquote>
+          </div>
+          <div class="meta">
+            <span><b>Ирина К.</b> · депозит $35 000</span>
+            <span>наша доля 15%</span>
+          </div>
+        </div>
+
+        <!-- TODO(real-data): добавить 3 реальных кейса с фото + Telegram username + сумма депозита -->
+        <div class="proof-card placeholder" aria-hidden="true">
+          <div>
+            <div class="who"><span class="avatar avatar-empty" aria-hidden="true"></span>Здесь появится новый кейс</div>
+            <blockquote>Готовим публикацию третьего кейса.</blockquote>
+          </div>
+          <div class="meta"><span><b>—</b></span><span>скоро</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ABOUT ============================== -->
+<section class="s" id="about">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">·</span>
+        <span class="eyebrow">Кто мы</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Финансовый партнёр, не «гуру».</h2>
+      </div>
+    </div>
+
+    <div class="about">
+      <div class="about-text reveal d1">
+        <p>Stablefold — это команда, которая работает в крипте с 2018 года. Мы прошли два полных цикла, потеряли на плечах, выиграли на DeFi и сделали один важный вывод: устойчивый доход в крипте делается не на угадывании цены, а на математических аномалиях рынка.</p>
+        <p>Мы построили собственный скринер лимитных ордеров на DEX и больше года тестировали его на собственном капитале. Сейчас открываем доступ ограниченному числу клиентов — потому что верим, что наставничество с прямой финансовой ответственностью лучше любого курса.</p>
+        <p>Мы зарегистрированы за пределами РФ и работаем по международной модели. Никаких посредников, никаких приватных ключей в наших руках. Только инструмент, сопровождение и общий интерес к вашему результату.</p>
+
+        <dl class="about-meta">
+          <div>
+            <dt>Юрисдикция</dt>
+            <dd>ОАЭ · DMCC</dd>
+          </div>
+          <div>
+            <dt>Опыт в крипте</dt>
+            <dd>с 2018 года</dd>
+          </div>
+          <div>
+            <dt>Клиентов в работе</dt>
+            <dd>14 / 20 мест</dd>
+          </div>
+          <div>
+            <dt>Минимальный капитал</dt>
+            <dd>от $3 000</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FAQ ============================== -->
+<section class="s" id="faq" style="background:color-mix(in srgb, var(--slate) 40%, var(--ink))">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">·</span>
+        <span class="eyebrow">Вопросы</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">То, что обычно спрашивают на созвоне.</h2>
+      </div>
+    </div>
+
+    <div class="faq-list reveal">
+      <details class="faq-item" open>
+        <summary class="faq-q">
+          <span class="num">01.</span>
+          <span class="ttl">Где физически находятся мои деньги?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            На вашем личном горячем кошельке (TON / EVM / Solana — выбираем вместе на старте). Вы — единственный, у кого есть доступ к приватному ключу. Мы никогда не получаем ни ключей, ни seed-фразы, ни доступа к самому кошельку.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item" open>
+        <summary class="faq-q">
+          <span class="num">02.</span>
+          <span class="ttl">А если я ничего не заработаю — мне правда не нужно платить?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Да. Шкала 25 → 10% применяется только к <b>чистой</b> прибыли — то есть после оплаты комиссий блокчейна (которые называют «газ»), после убыточных сделок, после всех расходов. Если в неделе нет прибыли — вы платите ноль. Если месяц минусовый — вы платите ноль. Никаких подписок, никаких фиксированных сумм.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item" open>
+        <summary class="faq-q">
+          <span class="num">03.</span>
+          <span class="ttl">Какой минимальный капитал нужен?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            От $3 000. Это рабочий минимум, при котором экономика арбитража имеет смысл с учётом газа и комиссий сети. Для конкретного режима риска (консервативный / умеренный / агрессивный) минимум обсуждается отдельно на созвоне.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="num">04.</span>
+          <span class="ttl">Почему доход в стейблкоинах вообще возможен?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Потому что на децентрализованных биржах цена формируется ликвидностью, а не маркет-мейкерами. Когда крупный игрок переводит большой объём — он вынужден ставить лимитный ордер ниже рыночной цены, чтобы быстро найти контрагента. Эта аномалия и есть наш заработок. Это математика разницы цен, а не предсказание.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="num">05.</span>
+          <span class="ttl">Чем это отличается от пирамиды или фонда?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Тремя пунктами. Первое — у нас нет реферальной системы. Никто не получает деньги за приведённых клиентов. Второе — мы не принимаем депозитов, ваши деньги остаются у вас. Третье — мы зарабатываем только из чистой прибыли реальных сделок. Все три условия делают модель пирамиды технически невозможной.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="num">06.</span>
+          <span class="ttl">Сколько реально можно заработать?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Реалистичный диапазон по нашей статистике — 5–12% в месяц на консервативном и умеренном режиме. Мы сознательно не обещаем «х2 за месяц» — это не наша модель. Конкретные цифры под ваш капитал и режим риска обсуждаем на созвоне, опираясь на реальную историю сделок.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="num">07.</span>
+          <span class="ttl">А налоги?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Налоги — ваша зона ответственности и зависят от вашей юрисдикции. На созвоне можем порекомендовать партнёра-налогового консультанта (без комиссии для нас), если живёте в одной из распространённых стран русскоязычной диаспоры — ОАЭ, Кипр, Грузия, Казахстан, Турция, Израиль, страны ЕС, США.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="num">08.</span>
+          <span class="ttl">Что происходит на созвоне?</span>
+          <span class="toggle"></span>
+        </summary>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Это не «продающий созвон». Это разбор: мы смотрим вашу ситуацию (капитал, опыт, цели), показываем механику на живых сделках текущего дня, отвечаем на все вопросы. Длительность — 30–40 минут. Если совпадаем — обсуждаем старт. Если нет — расходимся, без давления.
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== QUALIFICATION FORM ============================== -->
+<section class="s qualify" id="qualify">
+  <div class="container">
+    <div class="s-head">
+      <div class="left">
+        <span class="num">·</span>
+        <span class="eyebrow">Заявка</span>
+      </div>
+      <div class="right">
+        <h2 class="h-2 reveal">Соберём <em style="color:var(--brass);font-style:italic;font-variation-settings:'opsz' 96,'SOFT' 100,'WONK' 1">короткий бриф</em> и сами выйдем на связь.</h2>
+        <p class="lead reveal d1" style="margin-top:18px">
+          4 коротких вопроса. Меньше минуты. После отправки откроется наш Telegram —
+          ваша заявка автоматически придёт нам в виде сообщения от вас.
+        </p>
+      </div>
+    </div>
+
+    <form class="qualify-form reveal" id="qualifyForm" novalidate>
+      <div class="qf-row">
+        <label class="qf-field">
+          <span class="qf-label">Как вас зовут</span>
+          <input type="text" name="name" required minlength="2" autocomplete="given-name" placeholder="Имя">
+        </label>
+        <label class="qf-field">
+          <span class="qf-label">Telegram (для связи)</span>
+          <input type="text" name="tg" required pattern="^@?[A-Za-z0-9_]{3,32}$" placeholder="@username">
+        </label>
+      </div>
+
+      <fieldset class="qf-radios">
+        <legend class="qf-label">Размер капитала, который готовы подключить</legend>
+        <div class="qf-options">
+          <label><input type="radio" name="capital" value="до $3k" required><span>до $3k</span></label>
+          <label><input type="radio" name="capital" value="$3 — 10k"><span>$3 — 10k</span></label>
+          <label><input type="radio" name="capital" value="$10 — 50k"><span>$10 — 50k</span></label>
+          <label><input type="radio" name="capital" value="$50k+"><span>$50k+</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="qf-radios">
+        <legend class="qf-label">Опыт в крипте</legend>
+        <div class="qf-options">
+          <label><input type="radio" name="exp" value="ноль — никогда не пробовал" required><span>никогда не пробовал</span></label>
+          <label><input type="radio" name="exp" value="есть кошелёк, делал базовые сделки"><span>есть кошелёк, делал базовые сделки</span></label>
+          <label><input type="radio" name="exp" value="торговал, был с плечами / DeFi"><span>торговал, был с плечами / DeFi</span></label>
+        </div>
+      </fieldset>
+
+      <div class="qf-foot">
+        <button type="submit" class="btn btn-primary qf-submit" data-magnetic>
+          Отправить заявку через Telegram
+          <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+        <p class="qf-note">
+          Откроется ваш Telegram с готовым сообщением — нажмите «Отправить».
+          Мы ответим в течение часа в рабочее время.
+        </p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============================== FINAL CTA ============================== -->
+<section class="final" id="apply">
+  <div class="container">
+    <div class="final-inner">
+      <span class="eyebrow reveal">Заявка</span>
+      <h2 class="h-display reveal-clip">
+        Один созвон.<br>
+        <em>Никаких обязательств.</em>
+      </h2>
+      <p class="lead reveal d2">
+        30 минут на разбор вашей ситуации, демонстрацию работы скринера
+        на живых сделках текущего дня и ответы на все вопросы. Если механика
+        подходит — обсуждаем вход в Operator Track. Если нет — расходимся, без давления.
+      </p>
+
+      <div class="hero-cta reveal d3">
+        <!-- TODO(real-data): подставить ссылку на Calendly / Tally формy записи -->
+        <a href="#apply" class="btn btn-primary" data-magnetic>
+          Записаться на разбор
+          <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a>
+        <!-- TODO(real-data): подставить реальный @ Telegram-канала / личного контакта -->
+        <a href="https://t.me/stablefold_team" rel="noopener" target="_blank" class="btn btn-ghost">
+          Написать в Telegram
+          <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a>
+      </div>
+
+      <div class="final-trust reveal d4">
+        <span>Не записываем созвон</span>
+        <span>Без последующих звонков</span>
+        <span>Ответ менеджера в течение часа</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="brand" style="margin-bottom:18px">
+          <span class="brand-mark"></span>
+          <span>Stablefold</span>
+        </a>
+        <p>Наставничество в стейблкоин-арбитраже на децентрализованных биржах. Деньги клиента остаются на его кошельке.</p>
+        <p style="font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--mute-soft)">© 2026 Stablefold DMCC</p>
+      </div>
+      <div>
+        <h3>Продукт</h3>
+        <ul>
+          <li><a href="#mechanism">Как работает</a></li>
+          <li><a href="#scale">Условия</a></li>
+          <li><a href="#stack">Что входит</a></li>
+          <li><a href="#proof">Результаты</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Компания</h3>
+        <ul>
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#faq">Вопросы</a></li>
+          <li><a href="#">Telegram-канал</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Контакт</h3>
+        <ul>
+          <li><a href="#apply">Записаться на созвон</a></li>
+          <li><a href="#">@stablefold_team</a></li>
+          <li><a href="mailto:hello@stablefold.io">hello@stablefold.io</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <b>Дисклеймер о рисках.</b> Криптовалютные операции связаны с финансовыми рисками. Прошлая доходность не гарантирует будущую. Stablefold не является инвестиционным фондом, не управляет средствами клиентов и не принимает депозитов. Все сделки совершаются клиентом самостоятельно с собственного кошелька. Stablefold предоставляет образовательные и наставнические услуги, а также доступ к программному инструменту (скринеру). Услуги не предназначены для резидентов юрисдикций, в которых деятельность с цифровыми активами ограничена.
+    </div>
+
+    <div class="foot-bottom">
+      <span>Stablefold DMCC · Dubai, UAE</span>
+      <span>Made for the long-term · 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---------- enable JS-only hidden state, then reveal on scroll ----------
+document.documentElement.classList.add('js-anim');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) }
+  })
+}, {threshold:.08, rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.reveal, .reveal-clip').forEach(el=>io.observe(el));
+// Safety net: if anything stays hidden after 2.5s (e.g. headless screenshot tools), force-reveal
+setTimeout(()=>document.querySelectorAll('.reveal:not(.in), .reveal-clip:not(.in)').forEach(el=>el.classList.add('in')), 2500);
+
+// ---------- FAQ accordion (multiple open allowed) ----------
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const summary = item.querySelector('.faq-q');
+  summary.addEventListener('click', (e)=>{
+    e.preventDefault();
+    item.classList.toggle('open');
+    if(item.classList.contains('open')) item.setAttribute('open',''); else item.removeAttribute('open');
+  });
+  // sync existing open attribute → class
+  if(item.hasAttribute('open')) item.classList.add('open');
+});
+
+// ---------- subtle parallax on hero side panel (desktop only) ----------
+const side = document.querySelector('.hero-side');
+if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
+  document.addEventListener('mousemove', (e)=>{
+    const x = (e.clientX / window.innerWidth - .5) * 4;
+    const y = (e.clientY / window.innerHeight - .5) * 4;
+    side.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  });
+}
+
+// ---------- sticky mobile CTA show/hide ----------
+(function(){
+  const cta = document.querySelector('.m-cta');
+  if(!cta) return;
+  const apply = document.getElementById('apply');
+  let ticking = false;
+  function check(){
+    const sy = window.scrollY;
+    const docH = document.documentElement.scrollHeight;
+    const winH = window.innerHeight;
+    const nearApply = apply && (apply.getBoundingClientRect().top < winH * 0.6);
+    const nearBottom = sy > docH - winH - 200;
+    if(sy > 600 && !nearApply && !nearBottom) cta.classList.add('show');
+    else cta.classList.remove('show');
+    ticking = false;
+  }
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ requestAnimationFrame(check); ticking = true; }
+  }, {passive:true});
+})();
+
+// ---------- number roll-up (odometer) ----------
+(function(){
+  function roll(el, to, dur){
+    const dec = (to.toString().split('.')[1]||'').length;
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min(1, (now-start)/dur);
+      const eased = 1 - Math.pow(1-t, 4);
+      el.textContent = (to * eased).toFixed(dec);
+      if(t<1) requestAnimationFrame(tick);
+      else el.textContent = to.toString();
+    }
+    requestAnimationFrame(tick);
+  }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el = e.target;
+      const to = parseFloat(el.dataset.to);
+      if(reduce){ el.textContent = to.toString(); }
+      else { roll(el, to, 1400); }
+      nio.unobserve(el);
+    });
+  }, {threshold:.4});
+  document.querySelectorAll('[data-to]').forEach(el=>{
+    el.classList.add('num-roll');
+    el.textContent = '0';
+    nio.observe(el);
+  });
+})();
+
+// ---------- pricing scale draw on entry ----------
+(function(){
+  const bar = document.querySelector('.scale-bar');
+  if(!bar) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ bar.classList.add('in'); io.unobserve(bar); }
+    });
+  }, {threshold:.5});
+  io.observe(bar);
+})();
+
+// ---------- proof chart draw-on (fallback for non scroll-timeline) ----------
+(function(){
+  const line = document.querySelector('.proof-line');
+  if(!line) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        line.classList.add('in');
+        const fill = document.querySelector('.proof-fill');
+        if(fill) setTimeout(()=>fill.classList.add('in'), 1400);
+        io.unobserve(line);
+      }
+    });
+  }, {threshold:.3});
+  io.observe(line);
+})();
+
+// ---------- chart cursor-follow hairline (desktop only) ----------
+(function(){
+  if(!matchMedia('(pointer: fine)').matches) return;
+  const svg = document.querySelector('.proof-chart svg');
+  if(!svg) return;
+  const ns = 'http://www.w3.org/2000/svg';
+  const cursor = document.createElementNS(ns,'line');
+  cursor.setAttribute('y1','0'); cursor.setAttribute('y2','220');
+  cursor.setAttribute('stroke','#B89968');
+  cursor.setAttribute('stroke-width','1');
+  cursor.setAttribute('stroke-dasharray','2 3');
+  cursor.style.opacity = '0';
+  cursor.style.transition = 'opacity .15s';
+  cursor.style.pointerEvents = 'none';
+  svg.appendChild(cursor);
+  let raf;
+  svg.addEventListener('pointermove', (e)=>{
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(()=>{
+      const rect = svg.getBoundingClientRect();
+      const x = ((e.clientX - rect.left)/rect.width)*600;
+      cursor.setAttribute('x1', x); cursor.setAttribute('x2', x);
+      cursor.style.opacity = '0.7';
+    });
+  });
+  svg.addEventListener('pointerleave', ()=>{ cursor.style.opacity = '0'; });
+})();
+
+// ---------- qualification form: build Telegram deeplink with prefilled brief ----------
+(function(){
+  const form = document.getElementById('qualifyForm');
+  if(!form) return;
+  // TODO(real-data): подставить реальный Telegram username (без @)
+  const TG_USERNAME = 'stablefold_team';
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    const fd = new FormData(form);
+    const name = (fd.get('name')||'').toString().trim();
+    let tg = (fd.get('tg')||'').toString().trim();
+    if(tg && !tg.startsWith('@')) tg = '@' + tg;
+    const cap = fd.get('capital')||'—';
+    const exp = fd.get('exp')||'—';
+    const msg = [
+      'Заявка с лендинга Stablefold',
+      '',
+      `Имя: ${name}`,
+      `Telegram: ${tg}`,
+      `Капитал: ${cap}`,
+      `Опыт в крипте: ${exp}`,
+      '',
+      'Прошу разбор по Operator Track.'
+    ].join('\n');
+    const url = `https://t.me/${TG_USERNAME}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank', 'noopener');
+  });
+})();
+
+// ---------- magnetic CTA (desktop, btn-primary[data-magnetic]) ----------
+(function(){
+  if(!matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll('.btn-primary[data-magnetic]').forEach(btn=>{
+    let raf;
+    btn.addEventListener('pointermove', e=>{
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(()=>{
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width/2)) * 0.18;
+        const y = (e.clientY - (r.top + r.height/2)) * 0.18;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+    btn.addEventListener('pointerleave', ()=>{
+      btn.style.transition = 'transform 350ms cubic-bezier(.22,.61,.36,1)';
+      btn.style.transform = '';
+      setTimeout(()=>{ btn.style.transition = ''; }, 350);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
