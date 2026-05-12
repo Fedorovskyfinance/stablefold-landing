@@ -1,0 +1,18 @@
+name = "stablefold-leads"
+main = "src/index.js"
+compatibility_date = "2026-05-12"
+compatibility_flags = []
+
+# Worker is invoked from https://stablefold.org/api/lead → routed via Cloudflare
+# To bind under custom domain, set up route in CF dashboard:
+#   stablefold.org/api/lead* → stablefold-leads worker
+# OR use workers.dev subdomain (e.g. stablefold-leads.<account>.workers.dev) via CORS
+
+# Secrets (set via: wrangler secret put TG_BOT_TOKEN / TG_CHAT_ID)
+# - TG_BOT_TOKEN  : Telegram bot token from @BotFather (e.g. "1234567:AAH...")
+# - TG_CHAT_ID    : numeric chat id of operator's private chat with the bot
+
+# Rate-limit storage (free tier KV) — optional, see src/index.js
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "<set after wrangler kv:namespace create RATE_LIMIT>"
