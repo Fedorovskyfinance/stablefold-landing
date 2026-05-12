@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Block AI crawlers we don't want indexing financial copy without permission
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+Sitemap: https://fedorovskyfinance.github.io/stablefold-landing/sitemap.xml

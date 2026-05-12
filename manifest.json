@@ -1,0 +1,20 @@
+{
+  "name": "Stablefold Operator Track",
+  "short_name": "Stablefold",
+  "description": "Стабильный доход на стейблкоинах за 60 дней. Платите только из своей прибыли.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B0D10",
+  "theme_color": "#0B0D10",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
