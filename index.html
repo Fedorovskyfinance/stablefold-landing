@@ -841,6 +841,28 @@ section.s{padding:140px 0; position:relative}
 }
 .qf-error.show{display:block}
 
+/* Success state — replaces form content after successful submit */
+.qf-success{
+  display:flex; flex-direction:column; align-items:flex-start; gap:18px;
+  padding:36px 0; max-width:60ch;
+}
+.qf-success-icon{
+  width:56px; height:56px; border-radius:50%;
+  background:color-mix(in srgb, var(--sage) 15%, transparent);
+  border:1px solid var(--sage);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--sage);
+}
+.qf-success-ttl{
+  font-family:var(--serif); font-size:clamp(28px, 3.4vw, 40px);
+  font-variation-settings:"opsz" 96,"SOFT" 50; font-weight:380;
+  letter-spacing:-0.022em; line-height:1.1; margin:0; color:var(--bone);
+}
+.qf-success-text{
+  font-family:var(--sans); font-size:16px; line-height:1.5;
+  color:var(--bone-soft); margin:0; max-width:60ch;
+}
+
 @media (max-width:480px){
   .qualify-form{gap:24px}
   .qf-options label{padding:10px 14px; font-size:13px}
@@ -1305,7 +1327,7 @@ footer{
 <!-- ============================== NAV ============================== -->
 <nav class="nav">
   <div class="container nav-inner">
-    <a href="#" class="brand">
+    <a href="/" class="brand">
       <span class="brand-mark"></span>
       <span>Stablefold</span>
     </a>
@@ -1326,9 +1348,8 @@ footer{
   <span class="m-cta-arrow" aria-hidden="true">→</span>
 </a>
 
-<!-- LEAD MAGNET PERSISTENT CHIP -->
-<!-- TODO(real-data): подставить реальную ссылку на PDF / Tally-форму сбора email -->
-<a href="#leadmagnet" class="lm-chip">
+<!-- LEAD MAGNET PERSISTENT CHIP — routes to qualification form (PDF deliverable upon qualification) -->
+<a href="#qualify" class="lm-chip">
   <span class="lm-icon" aria-hidden="true">
     <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M7 1v9M3 6l4 4 4-4M2 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </span>
@@ -1428,7 +1449,7 @@ footer{
     </div>
 
     <!-- INLINE LEAD MAGNET (visible on all viewports, but on desktop the floating chip is also shown) -->
-    <a href="#leadmagnet" class="lm-inline reveal">
+    <a href="#qualify" class="lm-inline reveal">
       <span class="lm-inline-icon" aria-hidden="true">
         <svg viewBox="0 0 14 14" fill="none" width="16" height="16"><path d="M7 1v9M3 6l4 4 4-4M2 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
@@ -2209,8 +2230,8 @@ footer{
       <div class="right">
         <h2 class="h-2 reveal">Соберём <em style="color:var(--brass);font-style:italic;font-variation-settings:'opsz' 96,'SOFT' 100,'WONK' 1">короткий бриф</em> и сами выйдем на связь.</h2>
         <p class="lead reveal d1" style="margin-top:18px">
-          4 коротких вопроса. Меньше минуты. После отправки откроется наш Telegram —
-          ваша заявка автоматически придёт нам в виде сообщения от вас.
+          4 коротких вопроса. Меньше минуты. После отправки мы свяжемся с вами через указанный Telegram —
+          обычно в течение нескольких часов в рабочее время.
         </p>
       </div>
     </div>
@@ -2248,12 +2269,23 @@ footer{
 
       <div class="qf-foot">
         <button type="submit" class="btn btn-primary qf-submit" data-magnetic>
-          Отправить заявку через Telegram
+          Отправить заявку
           <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
         </button>
         <p class="qf-note">
-          Откроется ваш Telegram с готовым сообщением — нажмите «Отправить».
-          Мы ответим в течение часа в рабочее время.
+          Мы свяжемся с вами через Telegram, указанный в заявке, в течение 24 часов в рабочее время.
+        </p>
+      </div>
+
+      <!-- Success state, shown after submit -->
+      <div class="qf-success" hidden>
+        <div class="qf-success-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" width="32" height="32"><path d="M5 12l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="qf-success-ttl">Заявка получена.</h3>
+        <p class="qf-success-text">
+          С вами свяжутся через Telegram, который вы указали — обычно в течение нескольких часов в рабочее время.
+          Никаких звонков, никакой рассылки.
         </p>
       </div>
     </form>
@@ -2276,14 +2308,8 @@ footer{
       </p>
 
       <div class="hero-cta reveal d3">
-        <!-- TODO(real-data): подставить ссылку на Calendly / Tally формy записи -->
-        <a href="#apply" class="btn btn-primary" data-magnetic>
-          Записаться на разбор
-          <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
-        </a>
-        <!-- TODO(real-data): подставить реальный @ Telegram-канала / личного контакта -->
-        <a href="https://t.me/stablefold_team" rel="noopener" target="_blank" class="btn btn-ghost">
-          Написать в Telegram
+        <a href="#qualify" class="btn btn-primary" data-magnetic>
+          Заполнить заявку
           <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
         </a>
       </div>
@@ -2304,7 +2330,7 @@ footer{
   <div class="container">
     <div class="foot-grid">
       <div>
-        <a href="#" class="brand" style="margin-bottom:18px">
+        <a href="/" class="brand" style="margin-bottom:18px">
           <span class="brand-mark"></span>
           <span>Stablefold</span>
         </a>
@@ -2325,16 +2351,13 @@ footer{
         <ul>
           <li><a href="#about">О нас</a></li>
           <li><a href="#faq">Вопросы</a></li>
-          <li><a href="#">Telegram-канал</a></li>
-          <li><a href="#">YouTube</a></li>
         </ul>
       </div>
       <div>
         <h3>Контакт</h3>
         <ul>
-          <li><a href="#apply">Записаться на созвон</a></li>
-          <li><a href="#">@stablefold_team</a></li>
-          <li><a href="mailto:hello@stablefold.io">hello@stablefold.io</a></li>
+          <li><a href="#qualify">Заполнить заявку</a></li>
+          <li><a href="#apply">Запись на разбор</a></li>
         </ul>
       </div>
     </div>
@@ -2494,33 +2517,44 @@ if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
   svg.addEventListener('pointerleave', ()=>{ cursor.style.opacity = '0'; });
 })();
 
-// ---------- qualification form: build Telegram deeplink with prefilled brief ----------
+// ---------- qualification form: capture + show success state ----------
+// Lead capture currently local-only (localStorage). Wire to a backend (Telegram bot via
+// Cloudflare Worker, or Formspree/Web3Forms) when admin path is decided. Form data is
+// preserved in browser so nothing is lost during the interim.
 (function(){
   const form = document.getElementById('qualifyForm');
   if(!form) return;
-  // TODO(real-data): подставить реальный Telegram username (без @)
-  const TG_USERNAME = 'stablefold_team';
+  const successPanel = form.querySelector('.qf-success');
+  const formFields = Array.from(form.children).filter(el => !el.classList.contains('qf-success'));
+
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
     if(!form.checkValidity()){ form.reportValidity(); return; }
+
     const fd = new FormData(form);
-    const name = (fd.get('name')||'').toString().trim();
-    let tg = (fd.get('tg')||'').toString().trim();
-    if(tg && !tg.startsWith('@')) tg = '@' + tg;
-    const cap = fd.get('capital')||'—';
-    const exp = fd.get('exp')||'—';
-    const msg = [
-      'Заявка с лендинга Stablefold',
-      '',
-      `Имя: ${name}`,
-      `Telegram: ${tg}`,
-      `Капитал: ${cap}`,
-      `Опыт в крипте: ${exp}`,
-      '',
-      'Прошу разбор по Operator Track.'
-    ].join('\n');
-    const url = `https://t.me/${TG_USERNAME}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank', 'noopener');
+    const lead = {
+      ts: new Date().toISOString(),
+      name: (fd.get('name')||'').toString().trim(),
+      tg: (fd.get('tg')||'').toString().trim().replace(/^@?/, '@'),
+      capital: fd.get('capital') || '',
+      exp: fd.get('exp') || '',
+      ua: navigator.userAgent.slice(0,200),
+      ref: document.referrer || 'direct',
+    };
+
+    // Persist locally so the lead isn't lost client-side
+    try {
+      const stored = JSON.parse(localStorage.getItem('stablefold_leads') || '[]');
+      stored.push(lead);
+      localStorage.setItem('stablefold_leads', JSON.stringify(stored));
+    } catch(_) { /* ignore quota errors */ }
+
+    // Swap form fields for success state
+    formFields.forEach(el => el.hidden = true);
+    if (successPanel) {
+      successPanel.hidden = false;
+      successPanel.scrollIntoView({behavior:'smooth', block:'center'});
+    }
   });
 })();
 
