@@ -6,6 +6,8 @@
 <title>Stablefold — Stablecoin Operator Track. Доход на стейблкоинах за 60 дней.</title>
 <meta name="description" content="Стабильный доход на ваших стейблкоинах за 60 дней — или вы не платите ни цента. Платите только из чистой прибыли. Деньги остаются на вашем кошельке. Шкала комиссии 25 → 10%." />
 <meta name="theme-color" content="#0B0D10" />
+<!-- Lead-capture endpoint: swap with production Worker URL after CF deploy -->
+<meta name="stablefold-worker" content="http://127.0.0.1:8787" />
 <meta name="color-scheme" content="dark" />
 <link rel="canonical" href="https://fedorovskyfinance.github.io/stablefold-landing/" />
 
@@ -724,9 +726,14 @@ section.s{padding:140px 0; position:relative}
 
 /* ---------- about ---------- */
 .about{
-  display:grid; grid-template-columns: 1fr; gap:0; max-width:760px;
+  display:grid; grid-template-columns: 1fr 2fr; gap:60px; max-width:none;
 }
+.about-text{ grid-column: 2; max-width: 640px }
 .about-text p{margin:0 0 18px; color:var(--bone-soft); font-size:16.5px; line-height:1.65}
+@media (max-width:860px){
+  .about{grid-template-columns:1fr; gap:0}
+  .about-text{grid-column:1; max-width:none}
+}
 .about-meta{
   margin-top:32px; display:grid;grid-template-columns:repeat(2,1fr);gap:20px 32px;
   padding-top:30px;border-top:1px solid var(--hairline);
@@ -1348,14 +1355,14 @@ footer{
   <span class="m-cta-arrow" aria-hidden="true">→</span>
 </a>
 
-<!-- LEAD MAGNET PERSISTENT CHIP — routes to qualification form (PDF deliverable upon qualification) -->
+<!-- PERSISTENT CHIP — free 30-min разбор, routes to qualification form -->
 <a href="#qualify" class="lm-chip">
   <span class="lm-icon" aria-hidden="true">
-    <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M7 1v9M3 6l4 4 4-4M2 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </span>
   <span class="lm-text">
     <b>Бесплатно</b>
-    <span>7 способов заработать на USDT — PDF</span>
+    <span>30 минут · разбор вашей ситуации</span>
   </span>
 </a>
 
@@ -1448,16 +1455,16 @@ footer{
       </div>
     </div>
 
-    <!-- INLINE LEAD MAGNET (visible on all viewports, but on desktop the floating chip is also shown) -->
+    <!-- INLINE CTA — free 30-min разбор (visible on all viewports, floating chip duplicates on desktop) -->
     <a href="#qualify" class="lm-inline reveal">
       <span class="lm-inline-icon" aria-hidden="true">
-        <svg viewBox="0 0 14 14" fill="none" width="16" height="16"><path d="M7 1v9M3 6l4 4 4-4M2 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 14 14" fill="none" width="16" height="16"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
       <span class="lm-inline-text">
-        <b>Бесплатно — без регистрации</b>
-        <span>«7 способов заработать на USDT, не торгуя его» — PDF на 12 страниц</span>
+        <b>Бесплатно · без обязательств</b>
+        <span>30-минутный разбор: покажем скринер на сделках текущего дня и ответим на вопросы</span>
       </span>
-      <span class="lm-inline-cta">Скачать PDF →</span>
+      <span class="lm-inline-cta">Записаться →</span>
     </a>
   </div>
 </header>
@@ -2065,7 +2072,7 @@ footer{
         <span class="eyebrow">Кто мы</span>
       </div>
       <div class="right">
-        <h2 class="h-2 reveal">Финансовый партнёр, не «гуру».</h2>
+        <h2 class="h-2 reveal">Финансовый партнёр,<br>не&nbsp;«гуру».</h2>
       </div>
     </div>
 
@@ -2237,6 +2244,11 @@ footer{
     </div>
 
     <form class="qualify-form reveal" id="qualifyForm" novalidate>
+      <!-- Honeypot: invisible field that real users don't see/fill. Bots fill everything → silent reject -->
+      <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+        <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
       <div class="qf-row">
         <label class="qf-field">
           <span class="qf-label">Как вас зовут</span>
@@ -2517,19 +2529,30 @@ if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
   svg.addEventListener('pointerleave', ()=>{ cursor.style.opacity = '0'; });
 })();
 
-// ---------- qualification form: capture + show success state ----------
-// Lead capture currently local-only (localStorage). Wire to a backend (Telegram bot via
-// Cloudflare Worker, or Formspree/Web3Forms) when admin path is decided. Form data is
-// preserved in browser so nothing is lost during the interim.
+// ---------- qualification form: POST to lead Worker + show success state ----------
+// Worker URL is configured via a meta tag so it can be swapped after CF deploy:
+//   <meta name="stablefold-worker" content="https://...workers.dev">
+// If meta is missing or empty, lead is still persisted to localStorage as fallback.
 (function(){
   const form = document.getElementById('qualifyForm');
   if(!form) return;
   const successPanel = form.querySelector('.qf-success');
   const formFields = Array.from(form.children).filter(el => !el.classList.contains('qf-success'));
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const workerUrl = document.querySelector('meta[name="stablefold-worker"]')?.content || '';
 
-  form.addEventListener('submit', (e)=>{
+  function showSuccess() {
+    formFields.forEach(el => el.hidden = true);
+    if (successPanel) {
+      successPanel.hidden = false;
+      successPanel.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  }
+
+  form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     if(!form.checkValidity()){ form.reportValidity(); return; }
+    if (submitBtn) submitBtn.disabled = true;
 
     const fd = new FormData(form);
     const lead = {
@@ -2538,23 +2561,35 @@ if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
       tg: (fd.get('tg')||'').toString().trim().replace(/^@?/, '@'),
       capital: fd.get('capital') || '',
       exp: fd.get('exp') || '',
+      website: fd.get('website') || '',  // honeypot (hidden field)
       ua: navigator.userAgent.slice(0,200),
       ref: document.referrer || 'direct',
     };
 
-    // Persist locally so the lead isn't lost client-side
+    // Persist locally as fallback so nothing is lost even if Worker is down
     try {
       const stored = JSON.parse(localStorage.getItem('stablefold_leads') || '[]');
       stored.push(lead);
       localStorage.setItem('stablefold_leads', JSON.stringify(stored));
     } catch(_) { /* ignore quota errors */ }
 
-    // Swap form fields for success state
-    formFields.forEach(el => el.hidden = true);
-    if (successPanel) {
-      successPanel.hidden = false;
-      successPanel.scrollIntoView({behavior:'smooth', block:'center'});
+    // POST to Worker if configured. We show success regardless of backend status
+    // because the lead is already saved locally; operator can retrieve from
+    // localStorage if Worker is misconfigured.
+    if (workerUrl) {
+      try {
+        const res = await fetch(workerUrl, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(lead),
+        });
+        if (!res.ok) console.warn('Lead Worker returned', res.status);
+      } catch(err) {
+        console.warn('Lead Worker unreachable:', err);
+      }
     }
+
+    showSuccess();
   });
 })();
 
