@@ -8,9 +8,8 @@ DOMAIN="${1:-stablefold.org}"
 REPO="Fedorovskyfinance/stablefold-landing"
 LANDING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GH_IPS=("185.199.108.153" "185.199.109.153" "185.199.110.153" "185.199.111.153")
-TIMEOUT_SEC=7200   # 2 hours (Spaceship propagation can be slow)
+TIMEOUT_SEC=3600   # 1 hour total wait
 POLL_SEC=30
-HEARTBEAT_EVERY=10  # log "still waiting" every N polls (= 5min)
 START=$(date +%s)
 
 log() { echo "[$(date +%H:%M:%S)] $*"; }
@@ -21,58 +20,30 @@ log "Working dir: $LANDING_DIR"
 log "Timeout: ${TIMEOUT_SEC}s, poll every ${POLL_SEC}s"
 log ""
 
-# ---------- Phase 1: wait for DNS (via DoH — bypasses ISP UDP/53 hijacking) ----------
+# ---------- Phase 1: wait for DNS ----------
 log "Phase 1/5: waiting for DNS to point at GitHub Pages IPs..."
-log "  (using DNS-over-HTTPS via 1.1.1.1 — TLS, ISP cannot intercept)"
 prev_state=""
-poll_count=0
-
-# resolve via DoH (returns space-separated A records, or empty)
-resolve_doh() {
-  curl -s -H 'Accept: application/dns-json' \
-    "https://cloudflare-dns.com/dns-query?name=$1&type=A" \
-    --max-time 8 2>/dev/null \
-    | python3 -c "
-import json, sys
-try:
-    d = json.load(sys.stdin)
-    if d.get('Status') != 0:
-        print('')
-    else:
-        print(' '.join(sorted(a.get('data','') for a in d.get('Answer', []) if a.get('type') == 1)))
-except Exception:
-    print('')
-" 2>/dev/null
-}
-
 while true; do
   now=$(date +%s)
-  elapsed=$((now - START))
-  if [ $elapsed -gt $TIMEOUT_SEC ]; then
+  if [ $((now - START)) -gt $TIMEOUT_SEC ]; then
     log "❌ TIMEOUT after ${TIMEOUT_SEC}s. DNS never appeared. Aborting."
     exit 1
   fi
-
-  result=$(resolve_doh "$DOMAIN")
+  # Query through 1.1.1.1 to bypass any ISP hijacking
+  result=$(dig +short +time=3 @1.1.1.1 "$DOMAIN" A 2>/dev/null | sort | tr '\n' ' ')
   matched=0
   for ip in "${GH_IPS[@]}"; do
     if echo "$result" | grep -q "$ip"; then matched=$((matched+1)); fi
   done
   state="ips=[$result] matched=$matched/4"
-
   if [ "$state" != "$prev_state" ]; then
-    log "  $state  (elapsed ${elapsed}s)"
+    log "  $state"
     prev_state="$state"
-  elif [ $((poll_count % HEARTBEAT_EVERY)) -eq 0 ]; then
-    log "  …still waiting (elapsed ${elapsed}s, last seen: $state)"
   fi
-
   if [ "$matched" -ge 3 ]; then
     log "✅ DNS ready: $matched/4 GitHub Pages IPs resolving"
     break
   fi
-
-  poll_count=$((poll_count + 1))
   sleep $POLL_SEC
 done
 
