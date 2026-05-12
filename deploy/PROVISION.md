@@ -2,9 +2,9 @@
 
 ## Что мы получим
 - **VPS:** Hetzner CX22 (Falkenstein, DE) — €4.59/мес ≈ $5/мес
-- **Домен:** stablefold.com на Porkbun — $11/год
+- **Домен:** stablefold.org на Porkbun — $11/год
 - **Всего:** ~$71/год (≈ ₽6 700/год при курсе 95)
-- **URL:** `https://stablefold.com` с автоматическим SSL (Let's Encrypt)
+- **URL:** `https://stablefold.org` с автоматическим SSL (Let's Encrypt)
 
 ---
 
@@ -41,7 +41,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0rEmFdxvyDKHEvj/IPL4weR0Q4Jd0yBlbjS5etBru3
 
 1. Открыть https://porkbun.com/account/signup → регистрация (email + пароль, нерос. email)
 2. Подтвердить email → войти
-3. На главной: поиск `stablefold.com` → должен быть свободен ($11/год)
+3. На главной: поиск `stablefold.org` → должен быть свободен ($11/год)
 4. **Add to Cart → Checkout**
 5. **Privacy:** WHOIS Privacy включён бесплатно — оставить
 6. **Auto-renew:** оставить ВКЛ (потом не забудешь)
@@ -67,7 +67,7 @@ VPS IP: <тут IPv4>
 - Подниму Let's Encrypt SSL
 - Залью лендинг
 - Настрою DNS у Porkbun (через их API — нужен API key, см. ниже)
-- Проверю https://stablefold.com
+- Проверю https://stablefold.org
 
 ---
 
@@ -76,7 +76,7 @@ VPS IP: <тут IPv4>
 Если хочешь чтобы я сам прописал DNS у Porkbun (а не вручную):
 
 1. Залогинься Porkbun → https://porkbun.com/account/api
-2. Включи **API Access** для домена `stablefold.com` (галочка справа)
+2. Включи **API Access** для домена `stablefold.org` (галочка справа)
 3. Сгенерируй ключи: **Create API Key**
 4. Скопируй **API Key** + **Secret Key**
 5. Передай их вместе с IP
@@ -87,14 +87,14 @@ VPS IP: <тут IPv4>
 
 ## Что произойдёт ПОСЛЕ моих 10 минут провизии
 
-1. `https://stablefold.com` — открывается с зелёным замком (HTTPS)
-2. `https://www.stablefold.com` — редирект на `https://stablefold.com` (canonical no-www)
+1. `https://stablefold.org` — открывается с зелёным замком (HTTPS)
+2. `https://www.stablefold.org` — редирект на `https://stablefold.org` (canonical no-www)
 3. **GitHub Pages** (`fedorovskyfinance.github.io/stablefold-landing`) остаётся как зеркало / fallback
 4. **Workflow редактуры:**
    - Локально правишь `landing/index.html`
    - `git add -A && git commit -m "..." && git push`
    - GitHub Pages обновляется автоматически
-   - Чтобы обновить **продакшн VPS** — `bash deploy/deploy.sh stablefold.com` (один rsync, ~5 сек)
+   - Чтобы обновить **продакшн VPS** — `bash deploy/deploy.sh stablefold.org` (один rsync, ~5 сек)
 
 ---
 

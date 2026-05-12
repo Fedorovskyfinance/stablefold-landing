@@ -4,8 +4,8 @@
 # Usage: bash provision.sh
 set -euo pipefail
 
-DOMAIN="stablefold.com"
-WWW_DOMAIN="www.stablefold.com"
+DOMAIN="stablefold.org"
+WWW_DOMAIN="www.stablefold.org"
 LE_EMAIL="1millionfedorovsky@gmail.com"     # для уведомлений Let's Encrypt о просрочке
 
 echo "=== [1/7] Updating system ==="

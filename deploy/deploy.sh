@@ -2,7 +2,7 @@
 # Deploy / re-deploy landing to VPS
 # Usage:  ./deploy/deploy.sh <vps-ip-or-hostname>
 # Example: ./deploy/deploy.sh 195.201.123.45
-#         ./deploy/deploy.sh stablefold.com   (after DNS is up)
+#         ./deploy/deploy.sh stablefold.org   (after DNS is up)
 set -euo pipefail
 
 HOST="${1:?Usage: $0 <vps-ip-or-hostname>}"
@@ -25,8 +25,8 @@ ssh -o StrictHostKeyChecking=accept-new "$SSH_USER@$HOST" \
   'chown -R www-data:www-data /var/www/stablefold && nginx -t && systemctl reload nginx'
 
 echo "=== Verifying ==="
-ssh "$SSH_USER@$HOST" 'curl -sI -H "Host: stablefold.com" http://127.0.0.1/ | head -1'
+ssh "$SSH_USER@$HOST" 'curl -sI -H "Host: stablefold.org" http://127.0.0.1/ | head -1'
 
 echo ""
 echo "✅ Deploy complete."
-echo "   curl -sI https://stablefold.com | head -1   # после DNS propagation"
+echo "   curl -sI https://stablefold.org | head -1   # после DNS propagation"
