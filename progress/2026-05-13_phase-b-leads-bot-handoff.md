@@ -30,8 +30,11 @@ What's needed to finish (~5 min once you have CF creds):
 | Asset | Value | Verified how |
 |-------|-------|--------------|
 | TG_BOT_TOKEN | `8266146512:AAHq8DNfqT4xbR9p1KeY2249p2I_E4IfOX8` | getMe returned `Stablefoldcryptobot` |
-| TG_CHAT_ID | `755147536` | getUpdates after /start; sendMessage returned `message_id: 3` |
+| TG_CHAT_ID (primary recipient) | `7348301836` | `@StableFold_web3` (Mark), arms-length operator — sendMessage `message_id: 5` |
+| TG_CHAT_ID (backup, optional) | `755147536` | `@FedorovskyFInance` (Maksim personal) — sendMessage `message_id: 3` |
 | Bot username | `@Stablefoldcryptobot` | live link https://t.me/Stablefoldcryptobot |
+
+Worker should be configured with `TG_CHAT_ID=7348301836` (arms-length operator).
 
 ⚠️ Both tokens already passed through chat (compromised by definition). After production deploy stabilizes — **revoke bot via @BotFather → /revoke → regenerate**, then update CF Worker secret.
 
