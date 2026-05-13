@@ -2535,17 +2535,24 @@ if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
   svg.addEventListener('pointerleave', ()=>{ cursor.style.opacity = '0'; });
 })();
 
-// ---------- qualification form: POST to lead Worker + show success state ----------
-// Worker URL is configured via a meta tag so it can be swapped after CF deploy:
-//   <meta name="stablefold-worker" content="https://...workers.dev">
-// If meta is missing or empty, lead is still persisted to localStorage as fallback.
+// ---------- qualification form: 3-tier delivery (Worker → direct TG → t.me deeplink) ----------
+// SECURITY NOTE: The bot token below is intentionally exposed. The bot @Stablefoldcryptobot
+// is dedicated solely to lead delivery to two specific chats (Mark + Maksim). Worst-case
+// abuse if token leaks: spammers send junk to those two chat-with-bot dialogs. Mitigation:
+// revoke via @BotFather → /revoke → regenerate. Real fix later: migrate to CF Worker with
+// token as server-side secret (code already in deploy/worker/, awaits CF account).
 (function(){
   const form = document.getElementById('qualifyForm');
   if(!form) return;
   const successPanel = form.querySelector('.qf-success');
   const formFields = Array.from(form.children).filter(el => !el.classList.contains('qf-success'));
   const submitBtn = form.querySelector('button[type="submit"]');
+
+  // Endpoint config
   const workerUrl = document.querySelector('meta[name="stablefold-worker"]')?.content || '';
+  const TG_BOT_TOKEN = '8266146512:AAHq8DNfqT4xbR9p1KeY2249p2I_E4IfOX8';
+  const TG_CHAT_IDS = ['7348301836', '755147536']; // Mark (@StableFold_web3), Maksim mirror
+  const RATE_LIMIT_MS = 30 * 1000; // 1 submit per 30s per browser
 
   function showSuccess() {
     formFields.forEach(el => el.hidden = true);
@@ -2555,9 +2562,52 @@ if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
     }
   }
 
+  function escapeHtml(s) {
+    return String(s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+  }
+
+  function formatLead(lead) {
+    return [
+      '<b>🟢 Новая заявка · Stablefold</b>',
+      '',
+      `<b>Имя:</b> ${escapeHtml(lead.name)}`,
+      `<b>Telegram:</b> ${escapeHtml(lead.tg)}`,
+      `<b>Капитал:</b> ${escapeHtml(lead.capital)}`,
+      `<b>Опыт:</b> ${escapeHtml(lead.exp)}`,
+      '',
+      `<i>Источник:</i> ${escapeHtml(lead.ref)}`,
+      `<i>Время:</i> ${lead.ts.replace('T',' ').slice(0,16)} UTC`,
+    ].join('\n');
+  }
+
+  async function sendToTelegramDirect(lead) {
+    const text = formatLead(lead);
+    const results = await Promise.allSettled(
+      TG_CHAT_IDS.map(chat_id =>
+        fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({chat_id, text, parse_mode: 'HTML', disable_web_page_preview: true}),
+        }).then(r => r.ok ? r : Promise.reject(`status ${r.status}`))
+      )
+    );
+    const ok = results.filter(r => r.status === 'fulfilled').length;
+    if (ok === 0) throw new Error('all chat deliveries failed');
+    return {delivered: ok, total: TG_CHAT_IDS.length};
+  }
+
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     if(!form.checkValidity()){ form.reportValidity(); return; }
+
+    // Per-browser rate limit
+    const last = parseInt(localStorage.getItem('stablefold_last_submit') || '0', 10);
+    if (Date.now() - last < RATE_LIMIT_MS) {
+      // Silently show success to avoid revealing the limit (prevents enumeration)
+      showSuccess();
+      return;
+    }
+
     if (submitBtn) submitBtn.disabled = true;
 
     const fd = new FormData(form);
@@ -2567,21 +2617,23 @@ if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
       tg: (fd.get('tg')||'').toString().trim().replace(/^@?/, '@'),
       capital: fd.get('capital') || '',
       exp: fd.get('exp') || '',
-      website: fd.get('website') || '',  // honeypot (hidden field)
+      website: fd.get('website') || '',  // honeypot
       ua: navigator.userAgent.slice(0,200),
       ref: document.referrer || 'direct',
     };
 
-    // Persist locally as fallback so nothing is lost even if Worker is down
+    // Persist locally as forensic backup
     try {
       const stored = JSON.parse(localStorage.getItem('stablefold_leads') || '[]');
       stored.push(lead);
       localStorage.setItem('stablefold_leads', JSON.stringify(stored));
-    } catch(_) { /* ignore quota errors */ }
+    } catch(_) { /* quota */ }
 
-    // POST to Worker if configured. We show success regardless of backend status
-    // because the lead is already saved locally; operator can retrieve from
-    // localStorage if Worker is misconfigured.
+    // Honeypot — silent success, do not deliver
+    if (lead.website) { showSuccess(); return; }
+
+    // Tier 1: Worker if configured
+    let delivered = false;
     if (workerUrl) {
       try {
         const res = await fetch(workerUrl, {
@@ -2589,12 +2641,36 @@ if(side && window.matchMedia('(min-width: 980px) and (pointer: fine)').matches){
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(lead),
         });
-        if (!res.ok) console.warn('Lead Worker returned', res.status);
+        delivered = res.ok;
+      } catch(err) { console.warn('Worker unreachable:', err); }
+    }
+
+    // Tier 2: Direct Telegram Bot API call (no server needed)
+    if (!delivered) {
+      try {
+        const r = await sendToTelegramDirect(lead);
+        delivered = true;
+        console.info('Lead delivered direct to TG:', r);
       } catch(err) {
-        console.warn('Lead Worker unreachable:', err);
+        console.warn('Direct TG send failed:', err);
       }
     }
 
+    // Tier 3: t.me deeplink fallback (lead must press Send themselves)
+    if (!delivered) {
+      const msg = [
+        'Заявка с stablefold.org',
+        '',
+        `Имя: ${lead.name}`,
+        `Telegram: ${lead.tg}`,
+        `Капитал: ${lead.capital}`,
+        `Опыт: ${lead.exp}`,
+      ].join('\n');
+      window.location.href = `https://t.me/StableFold_web3?text=${encodeURIComponent(msg)}`;
+      return;
+    }
+
+    localStorage.setItem('stablefold_last_submit', String(Date.now()));
     showSuccess();
   });
 })();
