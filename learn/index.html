@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stablefold · Как устроен рынок стейблкоинов — образовательный разбор</title>
+<meta name="description" content="Без хайпа и обещаний. Разбираем простыми словами, что такое стейблкоины, как формируется их цена на децентрализованных биржах и из чего состоит криптоэкосистема." />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Как устроен рынок стейблкоинов — простыми словами" />
+<meta property="og:description" content="Образовательный разбор криптоэкосистемы от Stablefold. Без хайпа, без обещаний." />
+<meta property="og:locale" content="ru_RU" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,72..144,300..500;1,72..144,300..500&family=Geist:wght@380..500&family=Geist+Mono:wght@400..500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,72..144,300..500;1,72..144,300..500&family=Geist:wght@380..500&family=Geist+Mono:wght@400..500&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,72..144,300..500;1,72..144,300..500&family=Geist:wght@380..500&family=Geist+Mono:wght@400..500&display=swap" /></noscript>
+
+<!-- ============================================================= -->
+<!-- META PIXEL — ЗАМЕНИ PIXEL_ID на реальный ID из Events Manager  -->
+<!-- (Business Manager → Events Manager → Data Sources → Pixel ID)  -->
+<!-- ============================================================= -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','PIXEL_ID');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1" /></noscript>
+<!-- END META PIXEL -->
+
+<style>
+:root{
+  --ink:#0B0D10; --slate:#13161B; --char:#1E2229; --hairline:#262A31;
+  --bone:#EDE5D3; --bone-soft:#D8D1BF; --mute:#9A9286; --mute-soft:#8A8579;
+  --brass:#B89968; --brass-deep:#8E7548; --sage:#7A8C5F;
+  --serif:"Fraunces","Times New Roman",serif;
+  --sans:"Geist",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --maxw:920px; --gutter:clamp(20px,5vw,48px); --radius:2px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background:var(--ink)}
+body{background:var(--ink);color:var(--bone);font-family:var(--sans);font-size:16px;line-height:1.6;font-weight:400}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+.hairline{height:1px;background:var(--hairline);width:100%}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--hairline)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-family:var(--serif);font-size:21px;font-weight:420;letter-spacing:-.02em;color:var(--bone)}
+.nav-link{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--mute);border:1px solid var(--hairline);padding:9px 14px;border-radius:var(--radius);transition:.2s}
+.nav-link:hover{color:var(--bone);border-color:var(--brass-deep)}
+
+/* hero */
+.hero{padding:clamp(56px,11vw,104px) 0 clamp(40px,8vw,72px)}
+.hero h1{font-family:var(--serif);font-weight:380;font-size:clamp(33px,6.4vw,56px);line-height:1.08;letter-spacing:-.025em;color:var(--bone);margin:20px 0 22px;max-width:18ch}
+.hero .lead{font-size:clamp(16px,2.4vw,19px);color:var(--bone-soft);max-width:54ch;line-height:1.62}
+
+/* sections */
+section{padding:clamp(44px,8vw,76px) 0}
+.s-head{font-family:var(--serif);font-weight:400;font-size:clamp(24px,4.2vw,34px);line-height:1.18;letter-spacing:-.02em;color:var(--bone);margin:14px 0 20px;max-width:24ch}
+.s-body{font-size:16.5px;color:var(--bone-soft);max-width:60ch;line-height:1.66}
+.s-body p+p{margin-top:16px}
+.s-body b{color:var(--bone);font-weight:500}
+
+/* ecosystem grid */
+.eco{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:30px;border-radius:var(--radius);overflow:hidden}
+.eco-item{background:var(--ink);padding:22px 20px}
+.eco-item .nm{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:9px}
+.eco-item .ds{font-size:13.5px;color:var(--mute);line-height:1.55}
+
+/* note / mechanism callout */
+.note{border-left:2px solid var(--brass-deep);padding:4px 0 4px 22px;margin-top:28px;max-width:58ch}
+.note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-soft);margin-bottom:8px}
+.note p{font-size:15.5px;color:var(--bone-soft);line-height:1.6}
+
+/* risk list */
+.risks{margin-top:26px;display:flex;flex-direction:column;gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:var(--radius);overflow:hidden}
+.risk{background:var(--ink);padding:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.risk .ix{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.1em;padding-top:3px}
+.risk .tx b{display:block;color:var(--bone);font-weight:500;font-size:15px;margin-bottom:5px}
+.risk .tx span{font-size:13.5px;color:var(--mute);line-height:1.56}
+
+/* CTA */
+.cta{background:var(--slate);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+.cta-in{padding:clamp(48px,9vw,84px) 0;text-align:left}
+.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(25px,4.4vw,36px);line-height:1.16;letter-spacing:-.02em;color:var(--bone);margin:14px 0 16px;max-width:22ch}
+.cta p{font-size:16px;color:var(--bone-soft);max-width:52ch;line-height:1.62;margin-bottom:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:.03em;background:var(--brass);color:var(--ink);padding:15px 26px;border-radius:var(--radius);border:1px solid var(--brass);font-weight:500;transition:.2s}
+.btn:hover{background:var(--bone);border-color:var(--bone);transform:translateY(-1px)}
+
+/* footer */
+footer{padding:46px 0 56px}
+.foot-discl{font-size:12.5px;color:var(--mute-soft);line-height:1.6;max-width:64ch}
+.foot-meta{font-family:var(--mono);font-size:11px;color:var(--mute-soft);letter-spacing:.04em;margin-top:20px}
+
+@media(max-width:560px){
+  .eco{grid-template-columns:1fr}
+  .hero h1{max-width:100%}
+  .nav-link{padding:8px 12px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a href="/" class="brand">Stablefold</a>
+    <a href="https://stablefold.org/" class="nav-link" data-exit>О проекте →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Образовательный разбор</div>
+    <h1>Как устроен рынок стейблкоинов — простыми словами</h1>
+    <p class="lead">Без хайпа и без обещаний. Разбираем, что такое стейблкоины, как формируется их цена на децентрализованных биржах и из чего вообще состоит криптоэкосистема — чтобы вы могли ориентироваться в ней осознанно.</p>
+  </div>
+</header>
+
+<div class="wrap"><div class="hairline"></div></div>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">01 · Основа</div>
+    <h2 class="s-head">Что такое стейблкоин</h2>
+    <div class="s-body">
+      <p>Большинство криптовалют сильно колеблются в цене. Стейблкоины устроены иначе: их стоимость <b>привязана к доллару один к одному</b>. Самые известные — USDT и USDC.</p>
+      <p>По сути это «доллар внутри блокчейна»: им можно рассчитываться, хранить его, переводить между площадками — без той волатильности, которой пугает крипта. Именно поэтому стейблкоины стали базовым инструментом всей экосистемы: через них проходит большая часть операций.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="hairline"></div></div>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">02 · Механика рынка</div>
+    <h2 class="s-head">Почему на децентрализованных биржах цена «гуляет»</h2>
+    <div class="s-body">
+      <p>На обычной (централизованной) бирже цену удерживают маркет-мейкеры. На <b>децентрализованной бирже (DEX)</b> маркет-мейкеров нет — цена формируется чистой математикой ликвидности в пуле.</p>
+      <p>Из-за этого возможна ситуация: когда крупный участник перемещает большой объём, он вынужден выставлять заявки, и цена стейблкоина на короткое время отклоняется от ровного доллара — на доли цента. Это не «магия» и не аномалия, а <b>структурная особенность того, как устроены децентрализованные рынки</b>.</p>
+    </div>
+    <div class="note">
+      <div class="lbl">Почему это важно понимать</div>
+      <p>Понимание этой механики — база финансовой грамотности в крипте. Оно объясняет, почему «1 USDC» и «1 USDC» на разных площадках в один и тот же момент могут стоить чуть-чуть по-разному.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="hairline"></div></div>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">03 · Карта экосистемы</div>
+    <h2 class="s-head">Крипта — это не только биткоин</h2>
+    <div class="s-body">
+      <p>В массовом сознании крипта = «биткоин и казино». На деле это целая экосистема финансовых инструментов, и у каждого — своя логика и свой уровень риска.</p>
+    </div>
+    <div class="eco">
+      <div class="eco-item"><div class="nm">Спот</div><div class="ds">Покупка и хранение монет напрямую — самая простая форма участия.</div></div>
+      <div class="eco-item"><div class="nm">Стейкинг</div><div class="ds">Блокировка монет для поддержки работы сети.</div></div>
+      <div class="eco-item"><div class="nm">Рестейкинг</div><div class="ds">Повторное использование уже застейканных активов в других протоколах.</div></div>
+      <div class="eco-item"><div class="nm">Лендинг</div><div class="ds">Кредитование внутри децентрализованных протоколов.</div></div>
+      <div class="eco-item"><div class="nm">Airdrop / Retrodrop</div><div class="ds">Распределение токенов проектами среди ранних пользователей.</div></div>
+      <div class="eco-item"><div class="nm">Launchpool / Launchpad</div><div class="ds">Площадки раннего доступа к новым проектам.</div></div>
+      <div class="eco-item"><div class="nm">DeFi-фарминг</div><div class="ds">Предоставление ликвидности децентрализованным протоколам.</div></div>
+      <div class="eco-item"><div class="nm">Стейблкоины</div><div class="ds">«Доллар в блокчейне» — основа расчётов во всей экосистеме.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="hairline"></div></div>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">04 · Финансовая грамотность</div>
+    <h2 class="s-head">Что важно понимать новичку</h2>
+    <div class="s-body">
+      <p>Крипта не прощает наивности. Прежде чем что-либо делать, стоит разобраться в нескольких базовых вещах — это снижает риск самых дорогих ошибок.</p>
+    </div>
+    <div class="risks">
+      <div class="risk"><div class="ix">01</div><div class="tx"><b>Волатильность — это норма</b><span>Резкие движения цены — обычное свойство рынка, а не сигнал. Решения «на эмоциях» здесь обходятся дороже всего.</span></div></div>
+      <div class="risk"><div class="ix">02</div><div class="tx"><b>Скам-проекты выглядят убедительно</b><span>Красивый сайт и активный чат — не гарантия. Проверять команду, механику и репутацию нужно до, а не после.</span></div></div>
+      <div class="risk"><div class="ix">03</div><div class="tx"><b>Плечи (leverage) — главный пожиратель капитала</b><span>Торговля с плечом превращает обычное колебание рынка в полную потерю средств. Большинство новичков теряют деньги именно так.</span></div></div>
+      <div class="risk"><div class="ix">04</div><div class="tx"><b>Ключи решают всё</b><span>Тот, у кого приватный ключ от кошелька, и есть владелец средств. Хранение ключей — не формальность, а основа безопасности.</span></div></div>
+      <div class="risk"><div class="ix">05</div><div class="tx"><b>Темп важнее скорости</b><span>В крипту не заходят «последними деньгами» и не спешат. Понимание механики важнее, чем успеть «пока не поздно».</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap cta-in">
+    <div class="eyebrow">О проекте</div>
+    <h2>Stablefold — наставничество и комьюнити по крипте</h2>
+    <p>Мы помогаем разобраться в криптоэкосистеме и сопровождаем на практике — спокойно, без хайпа и без обещаний. Деньги всегда остаются на вашем собственном кошельке: мы не управляем чужими средствами.</p>
+    <a href="https://stablefold.org/" class="btn" data-exit>Узнать, как мы работаем →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-discl">Материал на этой странице носит исключительно образовательный характер и не является индивидуальной рекомендацией. Операции с криптовалютами связаны с финансовыми рисками — прошлые результаты не гарантируют будущих. Принимайте решения самостоятельно и взвешенно.</p>
+    <div class="foot-meta">© 2026 Stablefold · Образовательный материал</div>
+  </div>
+</footer>
+
+<script>
+// Доп. Pixel-события: глубина просмотра + переход на основной сайт.
+(function(){
+  var fired=false;
+  window.addEventListener('scroll',function(){
+    if(fired)return;
+    if((window.scrollY+window.innerHeight)/document.body.scrollHeight>0.6){
+      fired=true;
+      if(window.fbq)fbq('track','ViewContent',{content_name:'learn-bridge'});
+    }
+  },{passive:true});
+  document.querySelectorAll('[data-exit]').forEach(function(el){
+    el.addEventListener('click',function(){
+      if(window.fbq)fbq('trackCustom','OutboundToSite',{from:'learn-bridge'});
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
